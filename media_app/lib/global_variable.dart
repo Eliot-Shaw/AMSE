@@ -5,7 +5,7 @@ final products = [
     'category': 'Strategy',
     'players': '3-4',
     'duration': '60-120 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/shoes_1.png',
   },
   {
     'id': '1',
@@ -198,5 +198,5 @@ final products = [
     'players': '2-4',
     'duration': '15-30 minutes',
     'imageURL': 'assets/images/none.png',
-  }
+  },
 ];

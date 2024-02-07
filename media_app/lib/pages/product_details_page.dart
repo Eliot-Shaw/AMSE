@@ -17,27 +17,19 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   int selectedSize = 0;
 
   void onTap() {
-    if (selectedSize != 0) {
-      Provider.of<LikesProvider>(context, listen: false).addProduct({
-        'id': widget.product['id'],
-        'title': widget.product['title'],
-        'price': widget.product['price'],
-        'imageUrl': widget.product['imageUrl'],
-        'company': widget.product['company'],
-        'size': selectedSize,
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Product added successfully!'),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please select a size!'),
-        ),
-      );
-    }
+    Provider.of<LikesProvider>(context, listen: false).addProduct({
+      'id': widget.product['id'],
+      'title': widget.product['title'],
+      'imageUrl': widget.product['imageUrl'],
+      'category': widget.product['category'],
+      'players': widget.product['players'],
+      'duration': widget.product['duration'],
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Product liked!'),
+      ),
+    );
   }
 
   @override
@@ -71,7 +63,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '₱${widget.product['price']}',
+                  '₱${widget.product['category']}',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 10),

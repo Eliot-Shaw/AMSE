@@ -73,7 +73,7 @@ class LikesPage extends StatelessWidget {
               likesItem['title'].toString(),
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            subtitle: Text('Size: ${likesItem['size']}'),
+            subtitle: Text('Category: ${likesItem['category']}'),
           );
         },
       ),

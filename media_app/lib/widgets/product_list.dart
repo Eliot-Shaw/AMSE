@@ -11,7 +11,14 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
-  final List<String> filters = const ['All', 'Adidas', 'Nike', 'Puma'];
+  final List<String> filters = const [
+    'All',
+    'Strategy',
+    'Family',
+    'Party',
+    'Cooperative',
+    'Abstract',
+  ];
   late String selectedFilter;
 
   @override
