@@ -158,13 +158,13 @@
       "languageVersion": "3.2"
     },
     {
-      "name": "shop_app",
+      "name": "media_app",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-02-07T08:38:44.736215Z",
+  "generated": "2024-02-07T09:18:30.798557Z",
   "generator": "pub",
   "generatorVersion": "3.2.6"
 }

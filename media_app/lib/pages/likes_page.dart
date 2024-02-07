@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/providers/cart_provider.dart';
+import 'package:media_app/providers/likes_provider.dart';
 
-class CartPage extends StatelessWidget {
-  const CartPage({super.key});
+class LikesPage extends StatelessWidget {
+  const LikesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final cart = context.watch<CartProvider>().cart;
+    final likes = context.watch<LikesProvider>().likes;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cart'),
+        title: const Text('Likes'),
       ),
       body: ListView.builder(
-        itemCount: cart.length,
+        itemCount: likes.length,
         itemBuilder: (context, index) {
-          final cartItem = cart[index];
+          final likesItem = likes[index];
 
           return ListTile(
             leading: CircleAvatar(
-              backgroundImage: AssetImage(cartItem['imageUrl'] as String),
+              backgroundImage: AssetImage(likesItem['imageUrl'] as String),
               radius: 50,
             ),
             trailing: IconButton(
@@ -48,8 +48,8 @@ class CartPage extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             context
-                                .read<CartProvider>()
-                                .removeProduct(cartItem);
+                                .read<LikesProvider>()
+                                .removeProduct(likesItem);
                             Navigator.of(context).pop();
                           },
                           child: const Text(
@@ -70,10 +70,10 @@ class CartPage extends StatelessWidget {
               ),
             ),
             title: Text(
-              cartItem['title'].toString(),
+              likesItem['title'].toString(),
               style: Theme.of(context).textTheme.bodySmall,
             ),
-            subtitle: Text('Size: ${cartItem['size']}'),
+            subtitle: Text('Size: ${likesItem['size']}'),
           );
         },
       ),

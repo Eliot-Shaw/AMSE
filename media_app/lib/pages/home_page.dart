@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/pages/cart_page.dart';
+import 'package:media_app/pages/likes_page.dart';
 
-import 'package:shop_app/widgets/product_list.dart';
+import 'package:media_app/widgets/product_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentPage = 0;
 
-  List<Widget> pages = const [ProductList(), CartPage()];
+  List<Widget> pages = const [ProductList(), LikesPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.shopping_cart,
+              Icons.favorite,
             ),
             label: '',
           ),

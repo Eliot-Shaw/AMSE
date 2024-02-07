@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/providers/cart_provider.dart';
-import 'package:shop_app/pages/home_page.dart';
+import 'package:media_app/providers/likes_provider.dart';
+import 'package:media_app/pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => CartProvider(),
+      create: (context) => LikesProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Shopping App',

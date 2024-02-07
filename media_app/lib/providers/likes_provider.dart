@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class CartProvider extends ChangeNotifier {
-  final List<Map<String, dynamic>> cart = [];
+class LikesProvider extends ChangeNotifier {
+  final List<Map<String, dynamic>> likes = [];
 
   void addProduct(Map<String, dynamic> product) {
-    cart.add(product);
+    likes.add(product);
     notifyListeners();
   }
 
   void removeProduct(Map<String, dynamic> product) {
-    cart.remove(product);
+    likes.remove(product);
     notifyListeners();
   }
 }
