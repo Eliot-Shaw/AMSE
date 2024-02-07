@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:media_app/providers/cart_provider.dart';
+import 'package:media_app/providers/likes_provider.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final Map<String, Object> product;
@@ -18,7 +18,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   void onTap() {
     if (selectedSize != 0) {
-      Provider.of<CartProvider>(context, listen: false).addProduct({
+      Provider.of<LikesProvider>(context, listen: false).addProduct({
         'id': widget.product['id'],
         'title': widget.product['title'],
         'price': widget.product['price'],
@@ -110,7 +110,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       fixedSize: const Size(350, 50),
                     ),
                     child: const Text(
-                      'Add To Cart',
+                      'Add To Likes',
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,
