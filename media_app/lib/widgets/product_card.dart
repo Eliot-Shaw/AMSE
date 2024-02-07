@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
   final String title;
-  final double price;
+  final String category;
   final String image;
+  final String players;
+  final String duration;
   final Color backgroundColor;
   const ProductCard({
     Key? key,
     required this.title,
-    required this.price,
+    required this.category,
     required this.image,
+    required this.players,
+    required this.duration,
     required this.backgroundColor,
   }) : super(key: key);
 
@@ -32,7 +36,7 @@ class ProductCard extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            '₱$price',
+            category,
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 5),

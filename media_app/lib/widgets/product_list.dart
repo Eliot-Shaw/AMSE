@@ -121,7 +121,9 @@ class _ProductListState extends State<ProductList> {
                         },
                         child: ProductCard(
                           title: product['title'] as String,
-                          price: product['price'] as double,
+                          category: product['category'] as String,
+                          players: product['players'] as String,
+                          duration: product['duration'] as String,
                           image: product['imageUrl'] as String,
                           backgroundColor: index.isEven
                               ? const Color.fromRGBO(216, 240, 253, 1)
@@ -149,7 +151,9 @@ class _ProductListState extends State<ProductList> {
                         },
                         child: ProductCard(
                           title: product['title'] as String,
-                          price: product['price'] as double,
+                          category: product['category'] as String,
+                          players: product['players'] as String,
+                          duration: product['duration'] as String,
                           image: product['imageUrl'] as String,
                           backgroundColor: index.isEven
                               ? const Color.fromRGBO(216, 240, 253, 1)
