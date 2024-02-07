@@ -1,5 +1,4 @@
-final products = 
-[
+final products = [
   {
     'id': '0',
     'title': 'Settlers of Catan',
@@ -200,4 +199,4 @@ final products =
     'duration': '15-30 minutes',
     'imageURL': 'assets/images/quoridor.png',
   }
-]
+];
