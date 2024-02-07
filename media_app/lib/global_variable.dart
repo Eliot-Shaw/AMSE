@@ -6,7 +6,7 @@ final products =
     'category': 'Strategy',
     'players': '3-4',
     'duration': '60-120 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/catan.png',
   },
   {
     'id': '1',
@@ -14,7 +14,7 @@ final products =
     'category': 'Family',
     'players': '2-5',
     'duration': '30-60 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/ticket_to_ride.png',
   },
   {
     'id': '2',
@@ -22,7 +22,7 @@ final products =
     'category': 'Party',
     'players': '4-8+',
     'duration': '15-30 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/code_names.png',
   },
   {
     'id': '3',
@@ -30,7 +30,7 @@ final products =
     'category': 'Cooperative',
     'players': '2-4',
     'duration': '45 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/pandemic.png',
   },
   {
     'id': '4',
@@ -38,7 +38,7 @@ final products =
     'category': 'Abstract',
     'players': '2-4',
     'duration': '30-45 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/azul.png',
   },
   {
     'id': '5',
@@ -46,7 +46,7 @@ final products =
     'category': 'Strategy',
     'players': '1-5',
     'duration': '120 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/terraforming_mars.png',
   },
   {
     'id': '6',
@@ -54,7 +54,7 @@ final products =
     'category': 'Family',
     'players': '3-4',
     'duration': '60-120 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/sea_salt_and_pepper.png',
   },
   {
     'id': '7',
@@ -62,7 +62,7 @@ final products =
     'category': 'Party',
     'players': '3-6',
     'duration': '30 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/dixit.png',
   },
   {
     'id': '8',
@@ -70,7 +70,7 @@ final products =
     'category': 'Cooperative',
     'players': '2-4',
     'duration': '30 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/forbidden_island.png',
   },
   {
     'id': '9',
@@ -78,7 +78,7 @@ final products =
     'category': 'Abstract',
     'players': '2-4',
     'duration': '20 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/santorini.png',
   },
   {
     'id': '10',
@@ -86,7 +86,7 @@ final products =
     'category': 'Strategy',
     'players': '2',
     'duration': '180 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/twilight_struggle.png',
   },
   {
     'id': '11',
@@ -94,7 +94,7 @@ final products =
     'category': 'Family',
     'players': '2-5',
     'duration': '30-45 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/carcassonne.png',
   },
   {
     'id': '12',
@@ -102,7 +102,7 @@ final products =
     'category': 'Party',
     'players': '2-12+',
     'duration': '30-45 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/wavelength.png',
   },
   {
     'id': '13',
@@ -110,7 +110,7 @@ final products =
     'category': 'Cooperative',
     'players': '1-4',
     'duration': '60 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/ghost_stories.png',
   },
   {
     'id': '14',
@@ -118,7 +118,7 @@ final products =
     'category': 'Abstract',
     'players': '2',
     'duration': '15 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/onitama.png',
   },
   {
     'id': '15',
@@ -126,7 +126,7 @@ final products =
     'category': 'Strategy',
     'players': '1-7',
     'duration': '90-150 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/scythe.png',
   },
   {
     'id': '16',
@@ -134,7 +134,7 @@ final products =
     'category': 'Family',
     'players': '2-4',
     'duration': '30 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/splendor.png',
   },
   {
     'id': '17',
@@ -142,15 +142,15 @@ final products =
     'category': 'Party',
     'players': '3-7',
     'duration': '20 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/just_one.png',
   },
   {
     'id': '18',
-    'title': 'Pandemic Legacy: Season 1',
+    'title': 'Portal 2',
     'category': 'Cooperative',
     'players': '2-4',
     'duration': '60 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/portal_2.png',
   },
   {
     'id': '19',
@@ -158,7 +158,7 @@ final products =
     'category': 'Abstract',
     'players': '2',
     'duration': '15-30 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/quarto.png',
   },
   {
     'id': '20',
@@ -166,7 +166,7 @@ final products =
     'category': 'Strategy',
     'players': '1-5',
     'duration': '30-150 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/agricola.png',
   },
   {
     'id': '21',
@@ -174,7 +174,7 @@ final products =
     'category': 'Family',
     'players': '2-4',
     'duration': '15-20 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/kingdomino.png',
   },
   {
     'id': '22',
@@ -182,7 +182,7 @@ final products =
     'category': 'Party',
     'players': '4-8',
     'duration': '30-60 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/telestrations.png',
   },
   {
     'id': '23',
@@ -190,7 +190,7 @@ final products =
     'category': 'Cooperative',
     'players': '1-6',
     'duration': '45 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/flash_point_fire_rescue.png',
   },
   {
     'id': '24',
@@ -198,6 +198,6 @@ final products =
     'category': 'Abstract',
     'players': '2-4',
     'duration': '15-30 minutes',
-    'imageURL': 'assets/images/none.png',
+    'imageURL': 'assets/images/quoridor.png',
   }
 ]
