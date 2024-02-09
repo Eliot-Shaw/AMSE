@@ -10,6 +10,7 @@ class ProductList extends StatefulWidget {
   State<ProductList> createState() => _ProductListState();
 }
 
+
 class _ProductListState extends State<ProductList> {
   final List<String> filters = const [
     'All',
@@ -20,17 +21,26 @@ class _ProductListState extends State<ProductList> {
     'Abstract',
   ];
   late String selectedFilter;
-  late List<Product> filteredProducts; // Nouvelle liste filtrée
+  late List<Product> filteredProducts;
+  late TextEditingController _searchController;
+
 
   @override
   void initState() {
     super.initState();
     selectedFilter = filters[0];
-    filteredProducts = products; // Initialisez la liste filtrée avec tous les produits au début
+    filteredProducts = products;
+    _searchController = TextEditingController();
+
   }
 
-  // Méthode pour filtrer les produits en fonction de la catégorie sélectionnée
-  void filterProducts(String category) {
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void filterProducts(String category, String searchText) {
     setState(() {
       selectedFilter = category;
       if (category == 'All') {
@@ -38,45 +48,54 @@ class _ProductListState extends State<ProductList> {
       } else {
         filteredProducts = products.where((product) => product.category == category).toList();
       }
+
+      if (searchText.isNotEmpty) {
+        filteredProducts = filteredProducts.where((product) =>
+          product.title.toLowerCase().contains(searchText.toLowerCase())
+        ).toList();
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     const border = OutlineInputBorder(
-      borderSide: BorderSide(
-        color: Color.fromRGBO(225, 225, 225, 1),
-      ),
-      borderRadius: BorderRadius.horizontal(
-        left: Radius.circular(50),
-      ),
-    );
+    borderSide: BorderSide(
+      color: Color.fromRGBO(225, 225, 225, 1),
+    ),
+    borderRadius: BorderRadius.horizontal(
+      left: Radius.circular(50),
+    ),
+  );
 
-    return SafeArea(
-      child: Column(
-        children: [
-          Container(
-            // color: Colors.grey, // Couleur d'arrière-plan de la Row
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 5, 0),
-                  child: Text(
-                    'Jeu\nJoue',
-                    style: Theme.of(context).textTheme.titleLarge,
+  return SafeArea(
+    child: Column(
+      children: [
+        Container(
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 10, 5, 0),
+                child: Text(
+                  'Jeu\nJoue',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: (value) {
+                    filterProducts(selectedFilter, value);
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Search',
+                    prefixIcon: Icon(Icons.search),
+                    border: border,
+                    enabledBorder: border,
+                    focusedBorder: border,
                   ),
                 ),
-                const Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                      prefixIcon: Icon(Icons.search),
-                      border: border,
-                      enabledBorder: border,
-                      focusedBorder: border,
-                    ),
-                  ),
-                ),
+              ),
               ],
             ),
           ),
@@ -93,10 +112,11 @@ class _ProductListState extends State<ProductList> {
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      filterProducts(filter);
                       setState(() {
                         selectedFilter = filter;
                       });
+                      filterProducts(selectedFilter, _searchController.text);
+
                     },
                     child: Chip(
                       backgroundColor: selectedFilter == filter
