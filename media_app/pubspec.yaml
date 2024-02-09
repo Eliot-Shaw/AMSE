@@ -61,10 +61,39 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/agricola.png
+    - assets/images/azul.png
+    - assets/images/carcassonne.png
+    - assets/images/catan.png
+    - assets/images/code_names.png
+    - assets/images/dixit.png
+    - assets/images/flash_point_fire_rescue.png
+    - assets/images/forbidden_island.png
+    - assets/images/ghost_stories.png
+    - assets/images/just_one.png
+    - assets/images/kingdomino.png
+    - assets/images/none.png
+    - assets/images/onitama.png
+    - assets/images/pandemic.png
+    - assets/images/portal_2.png
+    - assets/images/quarto.png
+    - assets/images/quoridor.png
+    - assets/images/santorini.png
+    - assets/images/scythe.png
+    - assets/images/sea_salt_and_pepper.png
+    - assets/images/shoes_1.png
     - assets/images/shoes_1_v2.png
     - assets/images/shoes_2.png
+    - assets/images/shoes_3.png
     - assets/images/shoes_3_v2.png
     - assets/images/shoes_4.png
+    - assets/images/splendor.png
+    - assets/images/telestrations.png
+    - assets/images/terraforming_mars.png
+    - assets/images/ticket_to_ride.png
+    - assets/images/twilight_struggle.png
+    - assets/images/wavelength.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
