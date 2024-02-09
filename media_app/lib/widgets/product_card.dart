@@ -7,6 +7,7 @@ class ProductCard extends StatelessWidget {
   final String image;
   final String players;
   final String duration;
+  final String description;
   final Color backgroundColor;
   const ProductCard({
     Key? key,
@@ -15,6 +16,7 @@ class ProductCard extends StatelessWidget {
     required this.image,
     required this.players,
     required this.duration,
+    required this.description,
     required this.backgroundColor,
   }) : super(key: key);
 

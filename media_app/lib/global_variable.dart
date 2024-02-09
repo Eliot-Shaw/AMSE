@@ -1,4 +1,11 @@
-final products = [
+final Map<String, String> versionsJeu = {
+  'mini': 'Mini',
+  'normal': 'Normal',
+  'deluxe': 'Deluxe',
+  'collector': 'Collector',
+};
+
+final List<Map<String, String>> productsData = [
   {
     'id': '0',
     'title': 'Settlers of Catan',
@@ -6,6 +13,7 @@ final products = [
     'players': '3-4',
     'duration': '60-120 minutes',
     'imageUrl': 'assets/images/catan.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '1',
@@ -14,6 +22,7 @@ final products = [
     'players': '2-5',
     'duration': '30-60 minutes',
     'imageUrl': 'assets/images/ticket_to_ride.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '2',
@@ -22,6 +31,7 @@ final products = [
     'players': '4-8+',
     'duration': '15-30 minutes',
     'imageUrl': 'assets/images/code_names.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '3',
@@ -30,6 +40,7 @@ final products = [
     'players': '2-4',
     'duration': '45 minutes',
     'imageUrl': 'assets/images/pandemic.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '4',
@@ -38,6 +49,7 @@ final products = [
     'players': '2-4',
     'duration': '30-45 minutes',
     'imageUrl': 'assets/images/azul.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '5',
@@ -46,6 +58,7 @@ final products = [
     'players': '1-5',
     'duration': '120 minutes',
     'imageUrl': 'assets/images/terraforming_mars.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '6',
@@ -54,6 +67,7 @@ final products = [
     'players': '3-4',
     'duration': '60-120 minutes',
     'imageUrl': 'assets/images/sea_salt_and_pepper.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '7',
@@ -62,6 +76,7 @@ final products = [
     'players': '3-6',
     'duration': '30 minutes',
     'imageUrl': 'assets/images/dixit.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '8',
@@ -70,6 +85,7 @@ final products = [
     'players': '2-4',
     'duration': '30 minutes',
     'imageUrl': 'assets/images/forbidden_island.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '9',
@@ -78,6 +94,7 @@ final products = [
     'players': '2-4',
     'duration': '20 minutes',
     'imageUrl': 'assets/images/santorini.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '10',
@@ -86,6 +103,7 @@ final products = [
     'players': '2',
     'duration': '180 minutes',
     'imageUrl': 'assets/images/twilight_struggle.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '11',
@@ -94,6 +112,7 @@ final products = [
     'players': '2-5',
     'duration': '30-45 minutes',
     'imageUrl': 'assets/images/carcassonne.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '12',
@@ -102,6 +121,7 @@ final products = [
     'players': '2-12+',
     'duration': '30-45 minutes',
     'imageUrl': 'assets/images/wavelength.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '13',
@@ -110,6 +130,7 @@ final products = [
     'players': '1-4',
     'duration': '60 minutes',
     'imageUrl': 'assets/images/ghost_stories.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '14',
@@ -118,6 +139,7 @@ final products = [
     'players': '2',
     'duration': '15 minutes',
     'imageUrl': 'assets/images/onitama.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '15',
@@ -126,6 +148,7 @@ final products = [
     'players': '1-7',
     'duration': '90-150 minutes',
     'imageUrl': 'assets/images/scythe.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '16',
@@ -134,6 +157,7 @@ final products = [
     'players': '2-4',
     'duration': '30 minutes',
     'imageUrl': 'assets/images/splendor.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '17',
@@ -142,6 +166,7 @@ final products = [
     'players': '3-7',
     'duration': '20 minutes',
     'imageUrl': 'assets/images/just_one.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '18',
@@ -150,6 +175,7 @@ final products = [
     'players': '2-4',
     'duration': '60 minutes',
     'imageUrl': 'assets/images/portal_2.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '19',
@@ -158,6 +184,7 @@ final products = [
     'players': '2',
     'duration': '15-30 minutes',
     'imageUrl': 'assets/images/quarto.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '20',
@@ -166,6 +193,7 @@ final products = [
     'players': '1-5',
     'duration': '30-150 minutes',
     'imageUrl': 'assets/images/agricola.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '21',
@@ -174,6 +202,7 @@ final products = [
     'players': '2-4',
     'duration': '15-20 minutes',
     'imageUrl': 'assets/images/kingdomino.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '22',
@@ -182,6 +211,7 @@ final products = [
     'players': '4-8',
     'duration': '30-60 minutes',
     'imageUrl': 'assets/images/telestrations.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '23',
@@ -190,6 +220,7 @@ final products = [
     'players': '1-6',
     'duration': '45 minutes',
     'imageUrl': 'assets/images/flash_point_fire_rescue.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   },
   {
     'id': '24',
@@ -198,5 +229,6 @@ final products = [
     'players': '2-4',
     'duration': '15-30 minutes',
     'imageUrl': 'assets/images/quoridor.png',
+    'description': 'Ici une description complète du jeu : c\'est un très bon jeu à jouer dan sa catégorie et permet à tous les joueurs participants de participer dans la limite de ce jeu\nCe jeu dure une période de temps indiquée sur la boute et a peut-être gagné un prix pour sa qualité.', 
   }
 ];

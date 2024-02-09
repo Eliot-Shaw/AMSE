@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:media_app/global_variable.dart';
+import 'package:media_app/classes/product_class.dart';
 import 'package:media_app/widgets/product_card.dart';
 import 'package:media_app/pages/product_details_page.dart';
 
 class ProductList extends StatefulWidget {
-  const ProductList({super.key});
+  const ProductList({Key? key}) : super(key: key);
 
   @override
   State<ProductList> createState() => _ProductListState();
@@ -20,11 +20,25 @@ class _ProductListState extends State<ProductList> {
     'Abstract',
   ];
   late String selectedFilter;
+  late List<Product> filteredProducts; // Nouvelle liste filtrée
 
   @override
   void initState() {
     super.initState();
     selectedFilter = filters[0];
+    filteredProducts = products; // Initialisez la liste filtrée avec tous les produits au début
+  }
+
+  // Méthode pour filtrer les produits en fonction de la catégorie sélectionnée
+  void filterProducts(String category) {
+    setState(() {
+      selectedFilter = category;
+      if (category == 'All') {
+        filteredProducts = products; // Affichez tous les produits si "Tous" est sélectionné
+      } else {
+        filteredProducts = products.where((product) => product.category == category).toList();
+      }
+    });
   }
 
   @override
@@ -41,30 +55,33 @@ class _ProductListState extends State<ProductList> {
     return SafeArea(
       child: Column(
         children: [
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  'Ukay\nShoes',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ),
-              const Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    prefixIcon: Icon(Icons.search),
-                    border: border,
-                    enabledBorder: border,
-                    focusedBorder: border,
+          Container(
+            // color: Colors.grey, // Couleur d'arrière-plan de la Row
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 5, 0),
+                  child: Text(
+                    'Jeu\nJoue',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-              ),
-            ],
+                const Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search',
+                      prefixIcon: Icon(Icons.search),
+                      border: border,
+                      enabledBorder: border,
+                      focusedBorder: border,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(
-            height: 120,
+            height: 60,
             child: ListView.builder(
               itemCount: filters.length,
               scrollDirection: Axis.horizontal,
@@ -72,10 +89,11 @@ class _ProductListState extends State<ProductList> {
                 final filter = filters[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
+                    horizontal: 3.0,
                   ),
                   child: GestureDetector(
                     onTap: () {
+                      filterProducts(filter);
                       setState(() {
                         selectedFilter = filter;
                       });
@@ -85,7 +103,8 @@ class _ProductListState extends State<ProductList> {
                           ? Theme.of(context).colorScheme.primary
                           : const Color.fromRGBO(245, 247, 249, 1),
                       side: const BorderSide(
-                          color: Color.fromRGBO(245, 247, 249, 1)),
+                        color: Color.fromRGBO(245, 247, 249, 1),
+                      ),
                       label: Text(filter),
                       labelStyle: const TextStyle(fontSize: 16),
                       padding: const EdgeInsets.symmetric(
@@ -106,14 +125,13 @@ class _ProductListState extends State<ProductList> {
               builder: (context, constraints) {
                 if (constraints.maxWidth > 1000) {
                   return GridView.builder(
-                    itemCount: products.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                    itemCount: filteredProducts.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: 1.6,
                     ),
                     itemBuilder: (context, index) {
-                      final product = products[index];
+                      final product = filteredProducts[index];
                       return GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(
@@ -127,11 +145,12 @@ class _ProductListState extends State<ProductList> {
                           );
                         },
                         child: ProductCard(
-                          title: product['title'] as String,
-                          category: product['category'] as String,
-                          players: product['players'] as String,
-                          duration: product['duration'] as String,
-                          image: product['imageUrl'] as String,
+                          title: product.title,
+                          category: product.category,
+                          players: product.players,
+                          duration: product.duration,
+                          image: product.imageUrl,
+                          description: product.description,
                           backgroundColor: index.isEven
                               ? const Color.fromRGBO(216, 240, 253, 1)
                               : const Color.fromRGBO(245, 247, 249, 1),
@@ -141,9 +160,9 @@ class _ProductListState extends State<ProductList> {
                   );
                 } else {
                   return ListView.builder(
-                    itemCount: products.length,
+                    itemCount: filteredProducts.length,
                     itemBuilder: (context, index) {
-                      final product = products[index];
+                      final product = filteredProducts[index];
                       return GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(
@@ -157,11 +176,12 @@ class _ProductListState extends State<ProductList> {
                           );
                         },
                         child: ProductCard(
-                          title: product['title'] as String,
-                          category: product['category'] as String,
-                          players: product['players'] as String,
-                          duration: product['duration'] as String,
-                          image: product['imageUrl'] as String,
+                          title: product.title,
+                          category: product.category,
+                          players: product.players,
+                          duration: product.duration,
+                          image: product.imageUrl,
+                          description: product.description,
                           backgroundColor: index.isEven
                               ? const Color.fromRGBO(216, 240, 253, 1)
                               : const Color.fromRGBO(245, 247, 249, 1),
