@@ -73,8 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
               alignment: Alignment.center,
               transform: Matrix4.rotationX(_currentSliderSecondaryValue)
                 ..rotateZ(-math.pi / _currentSliderPrimaryValue)
-                ..scale(checkboxValue ? -1.0 : 1.0, 1.0)
-                ..scale(_currentSliderThirdValue),
+                ..scale(
+                    checkboxValue
+                        ? -_currentSliderThirdValue
+                        : _currentSliderThirdValue,
+                    _currentSliderThirdValue),
               child: Image.asset('assets/images/wallebra.png'),
             ),
           ),
