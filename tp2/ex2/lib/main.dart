@@ -56,7 +56,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double _currentSliderPrimaryValue = 0.2;
+  double _currentSliderPrimaryValue = 0.5;
   double _currentSliderSecondaryValue = 0.5;
 
   @override
@@ -66,36 +66,39 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          ColoredBox(
-            color: Colors.black,
+          SizedBox(
             child: Transform(
-              alignment: Alignment.topRight,
-              transform: Matrix4.skewY(_currentSliderSecondaryValue)
+              alignment: Alignment.center,
+              transform: Matrix4.rotationX(_currentSliderSecondaryValue)
                 ..rotateZ(-math.pi / _currentSliderPrimaryValue),
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                color: const Color(0xFFE8581C),
-                child: const Text('Apartment for rent!'),
-              ),
+              child: Image.asset('assets/images/wallebra.png'),
             ),
           ),
-          Slider(
-            value: _currentSliderPrimaryValue,
-            label: _currentSliderPrimaryValue.round().toString(),
-            onChanged: (double value) {
-              setState(() {
-                _currentSliderPrimaryValue = value;
-              });
-            },
-          ),
-          Slider(
-            value: _currentSliderSecondaryValue,
-            label: _currentSliderSecondaryValue.round().toString(),
-            onChanged: (double value) {
-              setState(() {
-                _currentSliderSecondaryValue = value;
-              });
-            },
+          Row(children: [
+            const Text('Rotation X : '),
+            Slider(
+              value: _currentSliderPrimaryValue,
+              label: _currentSliderPrimaryValue.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  _currentSliderPrimaryValue = value;
+                });
+              },
+            ),
+          ]),
+          Row(
+            children: [
+              const Text('Rotation Z : '),
+              Slider(
+                value: _currentSliderSecondaryValue,
+                label: _currentSliderSecondaryValue.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderSecondaryValue = value;
+                  });
+                },
+              ),
+            ],
           ),
         ],
       ),
