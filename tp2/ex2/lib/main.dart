@@ -77,7 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Row(children: [
             const Text('Rotation X : '),
-            Slider(
+            Expanded(
+                child: Slider(
               value: _currentSliderPrimaryValue,
               label: _currentSliderPrimaryValue.round().toString(),
               onChanged: (double value) {
@@ -85,12 +86,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   _currentSliderPrimaryValue = value;
                 });
               },
-            ),
+            )),
           ]),
           Row(
             children: [
               const Text('Rotation Z : '),
-              Slider(
+              Expanded(
+                  child: Slider(
                 value: _currentSliderSecondaryValue,
                 label: _currentSliderSecondaryValue.round().toString(),
                 onChanged: (double value) {
@@ -98,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     _currentSliderSecondaryValue = value;
                   });
                 },
-              ),
+              ))
             ],
           ),
           Row(
