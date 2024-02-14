@@ -58,6 +58,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   double _currentSliderPrimaryValue = 0.5;
   double _currentSliderSecondaryValue = 0.5;
+  double _currentSliderThirdValue = 0.5;
   bool checkboxValue = false;
 
   @override
@@ -71,7 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Transform(
               alignment: Alignment.center,
               transform: Matrix4.rotationX(_currentSliderSecondaryValue)
-                ..rotateZ(-math.pi / _currentSliderPrimaryValue),
+                ..rotateZ(-math.pi / _currentSliderPrimaryValue)
+                ..scale(_currentSliderThirdValue),
               child: Image.asset('assets/images/wallebra.png'),
             ),
           ),
@@ -114,6 +116,21 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 },
               ),
+            ],
+          ),
+          Row(
+            children: [
+              const Text('Scale : '),
+              Expanded(
+                  child: Slider(
+                value: _currentSliderThirdValue,
+                label: _currentSliderThirdValue.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderThirdValue = value;
+                  });
+                },
+              ))
             ],
           ),
         ],
