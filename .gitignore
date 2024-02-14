@@ -1,5 +1,6 @@
 **/build
 **/.dart_tool
 **/.vscode
+**/pubspec.lock
 
 /app_ideas/shop_app
