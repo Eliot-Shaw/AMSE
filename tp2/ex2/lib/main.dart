@@ -58,6 +58,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   double _currentSliderPrimaryValue = 0.5;
   double _currentSliderSecondaryValue = 0.5;
+  bool checkboxValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +96,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChanged: (double value) {
                   setState(() {
                     _currentSliderSecondaryValue = value;
+                  });
+                },
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              const Text('Mirror : '),
+              Checkbox(
+                value: checkboxValue,
+                onChanged: (bool? value) {
+                  setState(() {
+                    checkboxValue = value ?? false;
                   });
                 },
               ),
