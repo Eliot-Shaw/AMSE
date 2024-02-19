@@ -12,58 +12,43 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Map<String, Widget Function(BuildContext)> lesRoutes = {
+      '/ex1': (context) => const Ex1(),
+      '/ex2': (context) => const Ex2(),
+      '/ex3': (context) => const Ex3(),
+    };
+
     return MaterialApp(
-      home: const ExerciseListPage(),
-      routes: {
-        '/ex1': (context) => const Ex1(),
-        '/ex2': (context) => const Ex2(),
-        '/ex3': (context) => const Ex3(),
-      },
+      title: 'TP2',
+      routes: lesRoutes,
+      home: ExerciseListPage(routes: lesRoutes),
     );
   }
 }
 
 class ExerciseListPage extends StatelessWidget {
-  const ExerciseListPage({super.key});
+  final Map<String, WidgetBuilder> routes;
+
+  const ExerciseListPage({super.key, required this.routes});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Liste des exercices'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Liste des exs'),
       ),
       body: ListView(
-        children: <Widget>[
-          ListTile(
-            title: const Text(
-              Ex1.nomExercice,
-              style: TextStyle(color: Colors.black), // Couleur du texte en noir
-            ),
+        children: routes.keys.map((route) {
+          return ListTile(
+            title: Text((routes[route]!(context) as dynamic).getExerciceName()),
             onTap: () {
-              Navigator.pushNamed(context, '/ex1');
+              Navigator.pushNamed(context, route);
             },
-          ),
-          ListTile(
-            title: const Text(
-              Ex2.nomExercice,
-              style: TextStyle(color: Colors.black), // Couleur du texte en noir
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/ex2');
-            },
-          ),
-          ListTile(
-            title: const Text(
-              Ex3.nomExercice,
-              style: TextStyle(color: Colors.black), // Couleur du texte en noir
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/ex3');
-            },
-          ),
-        ],
+          );
+        }).toList(),
       ),
     );
   }
 }
+

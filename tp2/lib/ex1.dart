@@ -8,6 +8,10 @@ class Ex1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MyHomePage();
   }
+
+  String getExerciceName(){
+    return nomExercice;
+  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -22,8 +26,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(Ex1.nomExercice),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
         child: Column(

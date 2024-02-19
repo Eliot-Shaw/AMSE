@@ -8,6 +8,10 @@ class Ex2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MyHomePage();
   }
+
+  String getExerciceName(){
+    return nomExercice;
+  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -19,7 +23,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   double _currentSliderPrimaryValue = 0.5;
-  double _currentSliderSecondaryValue = 0.5;
+  double _currentSliderSecondaryValue = 0.0;
   double _currentSliderThirdValue = 0.5;
   bool checkboxValue = false;
 
@@ -27,8 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(Ex2.nomExercice),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
           SizedBox(
             child: Transform(
               alignment: Alignment.center,
-              transform: Matrix4.rotationX(_currentSliderSecondaryValue)
+              transform: Matrix4.rotationX(3*_currentSliderSecondaryValue)
                 ..rotateZ(6.2831853072*_currentSliderPrimaryValue)
                 ..scale(
                     checkboxValue
