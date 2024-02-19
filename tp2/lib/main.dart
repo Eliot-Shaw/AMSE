@@ -4,18 +4,16 @@ import 'package:tp2/ex2.dart';
 import 'package:tp2/ex3.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Liste des exercices',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: ExerciseListPage(),
+      home: const ExerciseListPage(),
       routes: {
         '/ex1': (context) => const Ex1(),
         '/ex2': (context) => const Ex2(),
@@ -26,28 +24,40 @@ class MyApp extends StatelessWidget {
 }
 
 class ExerciseListPage extends StatelessWidget {
+  const ExerciseListPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Liste des exs'),
       ),
       body: ListView(
         children: <Widget>[
           ListTile(
-            title: const Text('Ex 1'),
+            title: const Text(
+              Ex1.nomExercice,
+              style: TextStyle(color: Colors.black), // Couleur du texte en noir
+            ),
             onTap: () {
               Navigator.pushNamed(context, '/ex1');
             },
           ),
           ListTile(
-            title: const Text('Ex 2'),
+            title: const Text(
+              Ex2.nomExercice,
+              style: TextStyle(color: Colors.black), // Couleur du texte en noir
+            ),
             onTap: () {
               Navigator.pushNamed(context, '/ex2');
             },
           ),
           ListTile(
-            title: const Text('Ex 3'),
+            title: const Text(
+              Ex3.nomExercice,
+              style: TextStyle(color: Colors.black), // Couleur du texte en noir
+            ),
             onTap: () {
               Navigator.pushNamed(context, '/ex3');
             },
