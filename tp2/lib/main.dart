@@ -6,6 +6,8 @@ import 'package:tp2/ex4.dart';
 import 'package:tp2/ex5a.dart';
 import 'package:tp2/ex5b.dart';
 import 'package:tp2/ex5c.dart';
+import 'package:tp2/ex6a.dart';
+import 'package:tp2/ex6b.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
       '/ex5a': (context) => const Ex5a(),
       '/ex5b': (context) => const Ex5b(),
       '/ex5c': (context) => const Ex5c(),
+      '/ex6a': (context) => const Ex6a(),
+      '/ex6b': (context) => const Ex6b(),
     };
 
     return MaterialApp(
@@ -47,28 +51,27 @@ class ExerciseListPage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 150, 131, 236),
       ),
       body: ListView(
-  children: [
-    for (var route in routes.keys)
-      Column(
         children: [
-          ListTile(
-            title: Center(child: Text((routes[route]!(context) as dynamic).getExerciceName())),
-            onTap: () {
-              Navigator.pushNamed(context, route);
-            },
-          ),
-          const Divider(
-            color: Color.fromARGB(255, 150, 131, 236),
-            height: 1,
-            thickness: 1,
-            indent: 20,
-            endIndent: 20,
-          ),
+          for (var route in routes.keys)
+            Column(
+              children: [
+                ListTile(
+                  title: Center(child: Text((routes[route]!(context) as dynamic).getExerciceName())),
+                  onTap: () {
+                    Navigator.pushNamed(context, route);
+                  },
+                ),
+                const Divider(
+                  color: Color.fromARGB(255, 150, 131, 236),
+                  height: 1,
+                  thickness: 1,
+                  indent: 20,
+                  endIndent: 20,
+                ),
+              ],
+            ),
         ],
       ),
-  ],
-),
-
     );
   }
 }
