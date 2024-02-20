@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Ex1 extends StatelessWidget {
-  static const String nomExercice = "Afficher une image";
+class Ex4 extends StatelessWidget {
+  static const String nomExercice = "Suite...";
 
-  const Ex1({super.key});
+  const Ex4({super.key});
   @override
   Widget build(BuildContext context) {
     return const MyHomePage();
@@ -26,13 +26,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Ex1.nomExercice),
+        title: const Text(Ex4.nomExercice),
         backgroundColor: const Color.fromARGB(255, 150, 131, 236),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Image.asset('assets/images/wallebra.png')],
+      body: const Center(
+        child: Text(
+          'ON A MIS LES APP DANS UNE APPLIST',
+          style: TextStyle(fontSize: 20),
         ),
       ),
     );

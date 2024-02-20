@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(Ex2.nomExercice),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: const Color.fromARGB(255, 150, 131, 236),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

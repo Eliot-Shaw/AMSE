@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tp2/ex1.dart';
 import 'package:tp2/ex2.dart';
 import 'package:tp2/ex3.dart';
+import 'package:tp2/ex4.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       '/ex1': (context) => const Ex1(),
       '/ex2': (context) => const Ex2(),
       '/ex3': (context) => const Ex3(),
+      '/ex4': (context) => const Ex4(),
     };
 
     return MaterialApp(
@@ -36,18 +38,31 @@ class ExerciseListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Liste des exercices'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: const Color.fromARGB(255, 150, 131, 236),
       ),
       body: ListView(
-        children: routes.keys.map((route) {
-          return ListTile(
-            title: Text((routes[route]!(context) as dynamic).getExerciceName()),
+  children: [
+    for (var route in routes.keys)
+      Column(
+        children: [
+          ListTile(
+            title: Center(child: Text((routes[route]!(context) as dynamic).getExerciceName())),
             onTap: () {
               Navigator.pushNamed(context, route);
             },
-          );
-        }).toList(),
+          ),
+          const Divider(
+            color: Color.fromARGB(255, 150, 131, 236),
+            height: 1,
+            thickness: 1,
+            indent: 20,
+            endIndent: 20,
+          ),
+        ],
       ),
+  ],
+),
+
     );
   }
 }
