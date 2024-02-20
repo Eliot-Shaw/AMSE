@@ -51,6 +51,8 @@ class MyHomePage extends StatelessWidget {
     alignment: Alignment.center,
   );
 
+  MyHomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
