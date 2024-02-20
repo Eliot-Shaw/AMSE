@@ -3,6 +3,9 @@ import 'package:tp2/ex1.dart';
 import 'package:tp2/ex2.dart';
 import 'package:tp2/ex3.dart';
 import 'package:tp2/ex4.dart';
+import 'package:tp2/ex5a.dart';
+import 'package:tp2/ex5b.dart';
+import 'package:tp2/ex5c.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +21,9 @@ class MyApp extends StatelessWidget {
       '/ex2': (context) => const Ex2(),
       '/ex3': (context) => const Ex3(),
       '/ex4': (context) => const Ex4(),
+      '/ex5a': (context) => const Ex5a(),
+      '/ex5b': (context) => const Ex5b(),
+      '/ex5c': (context) => const Ex5c(),
     };
 
     return MaterialApp(

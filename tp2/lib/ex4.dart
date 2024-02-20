@@ -2,22 +2,29 @@ import 'package:flutter/material.dart';
 
 class Tile {
   String imageURL;
-  Alignment alignment;
+  double tailleTile;
+  
+  Tile({required this.imageURL, required this.tailleTile});
+  int ratioTuiles = 3;
+  
+  Widget croppedImageTile(int index) {
+    int row = index ~/ ratioTuiles;
+    int col = index % ratioTuiles;
+    double startX = col * tailleTile;
+    double startY = row * tailleTile;
 
-  Tile({required this.imageURL, required this.alignment});
-
-  Widget croppedImageTile() {
     return FittedBox(
       fit: BoxFit.fill,
       child: ClipRect(
         child: Container(
           child: Align(
-            alignment: alignment,
+            alignment: Alignment.topLeft,
             child: Image.network(
               imageURL,
-              width: 150.0,
-              height: 150.0,
-              fit: BoxFit.cover,
+              width: tailleTile,
+              height: tailleTile,
+              fit: BoxFit.fill,
+              alignment: Alignment(-startX / tailleTile, -startY / tailleTile),
             ),
           ),
         ),
@@ -25,7 +32,6 @@ class Tile {
     );
   }
 }
-
 class Ex4 extends StatelessWidget {
   static const String nomExercice = "Affichage d'une tuile";
 
@@ -43,12 +49,10 @@ class Ex4 extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   static const String imageURL = "assets/images/wallebra.png";
-  
-
-
+  static const double tailleTile = 150;
   final Tile tile = Tile(
     imageURL: imageURL,
-    alignment: Alignment.center,
+    tailleTile: tailleTile
   );
 
   MyHomePage({super.key});
@@ -58,18 +62,18 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(Ex4.nomExercice),
-        centerTitle: true,
+        backgroundColor:const Color.fromARGB(255, 150, 131, 236),
       ),
       body: Center(
         child: Column(
           children: [
             SizedBox(
-              width: 150.0,
-              height: 150.0,
+              width: tailleTile,
+              height: tailleTile,
               child: Container(
                 margin: const EdgeInsets.all(20.0),
                 child: InkWell(
-                  child: tile.croppedImageTile(),
+                  child: tile.croppedImageTile(0),
                   onTap: () {
                     print("Tapped on tile");
                   },
