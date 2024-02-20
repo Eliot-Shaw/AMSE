@@ -1,12 +1,39 @@
 import 'package:flutter/material.dart';
 
-class Ex4 extends StatelessWidget {
-  static const String nomExercice = "Suite...";
+class Tile {
+  String imageURL;
+  Alignment alignment;
 
-  const Ex4({super.key});
+  Tile({required this.imageURL, required this.alignment});
+
+  Widget croppedImageTile() {
+    return FittedBox(
+      fit: BoxFit.fill,
+      child: ClipRect(
+        child: Container(
+          child: Align(
+            alignment: alignment,
+            child: Image.network(
+              imageURL,
+              width: 150.0,
+              height: 150.0,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class Ex4 extends StatelessWidget {
+  static const String nomExercice = "Affichage d'une tuile";
+
+  const Ex4({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return const MyHomePage();
+    return MyHomePage();
   }
 
   String getExerciceName(){
@@ -14,25 +41,41 @@ class Ex4 extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class MyHomePage extends StatelessWidget {
+  static const String imageURL = "assets/images/wallebra.png";
+  
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
 
-class _MyHomePageState extends State<MyHomePage> {
+  final Tile tile = Tile(
+    imageURL: imageURL,
+    alignment: Alignment.center,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(Ex4.nomExercice),
-        backgroundColor: const Color.fromARGB(255, 150, 131, 236),
+        centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'ON A MIS LES APP DANS UNE APPLIST',
-          style: TextStyle(fontSize: 20),
+      body: Center(
+        child: Column(
+          children: [
+            SizedBox(
+              width: 150.0,
+              height: 150.0,
+              child: Container(
+                margin: const EdgeInsets.all(20.0),
+                child: InkWell(
+                  child: tile.croppedImageTile(),
+                  onTap: () {
+                    print("Tapped on tile");
+                  },
+                ),
+              ),
+            ),
+            Image.asset(imageURL)
+          ],
         ),
       ),
     );
