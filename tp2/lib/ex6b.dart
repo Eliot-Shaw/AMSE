@@ -116,17 +116,25 @@ class _MyHomePageState extends State<MyHomePage> {
       child: tile.toWidget(),
       onTap: () {
         int index = tile.indexTile;
+        // print("---");
         // print("Tapped on tile at index: $index");
+        
+        if(listTiles[index].isEmpty){
+          print("Tu as trouvé la tile vide !");
+        }
         if(index-1 >= 0 && listTiles[index-1].isEmpty){
-          swapTiles(index-1, index);
+          if(index%4 != 0){
+            swapTiles(index-1, index);
+          }
         }else if(index+1 <= 4*4-1 && listTiles[index+1].isEmpty){
-          swapTiles(index+1, index);
+          if((index+1)%4 != 0){
+            swapTiles(index+1, index);
+          }
         }else if(index-4 >= 0 && listTiles[index-4].isEmpty){
           swapTiles(index-4, index);
         }else if(index+4 <= 4*4-1 && listTiles[index+4].isEmpty){
           swapTiles(index+4, index);
         }
-        // print("---");
       },
     );
   }
