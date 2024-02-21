@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -75,8 +74,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int sliderMax = 10;
 
   late List<Tile> listTiles;
-  // int tileVide = Random().nextInt(_currentSliderValueGridCount*_currentSliderValueGridCount);
-  int tileVide = 0 ;
   @override
   void initState() {
     super.initState();
@@ -152,6 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void regenerateTiles() {
+    int tileVide = Random().nextInt(_currentSliderValueGridCount*_currentSliderValueGridCount);
     setState(() {
       listTiles = List<Tile>.generate(_currentSliderValueGridCount * _currentSliderValueGridCount, (index) {
         if (index == tileVide) {
