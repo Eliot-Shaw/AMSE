@@ -9,6 +9,7 @@ import 'package:tp2/ex5c.dart';
 import 'package:tp2/ex6a.dart';
 import 'package:tp2/ex6b.dart';
 import 'package:tp2/ex6c.dart';
+import 'package:tp2/ex7a.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
       '/ex6a': (context) => const Ex6a(),
       '/ex6b': (context) => const Ex6b(),
       '/ex6c': (context) => const Ex6c(),
+      '/ex7a': (context) => const Ex7a(),
     };
 
     return MaterialApp(
