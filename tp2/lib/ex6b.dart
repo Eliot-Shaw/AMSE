@@ -1,40 +1,62 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-math.Random random = new math.Random();
+math.Random random = math.Random();
 
 class Tile {
-  Color color = const Color.fromARGB(255, 150, 131, 236);
+  late int indexTile;
+  late Color color;
+  bool isEmpty = false;
 
-  Tile(this.color);
-  Tile.randomColor() {
-    color = Color.fromARGB(255, random.nextInt(255), random.nextInt(255), random.nextInt(255)); // Couleur full rando
+  Tile(this.indexTile, this.isEmpty) {
+    color = Color.fromARGB(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+  }
+
+  Widget toWidget() {
+  if (!isEmpty) {
+    return Container(
+      color: color,
+      child: Padding(
+        padding: const EdgeInsets.all(70.0),
+        child: Text(
+          indexTile.toString(),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+          ),
+        ),
+      ),
+    );
+  } else {
+    return Container(
+      color: const Color.fromARGB(255, 0, 0, 0),
+      child: Padding(
+        padding: const EdgeInsets.all(70.0),
+        child: Text(
+          indexTile.toString(),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+          ),
+        ),
+      ),
+    );
   }
 }
 
-class TileWidget extends StatelessWidget {
-  final Tile tile;
 
-  const TileWidget(this.tile);
-
-  @override
-  Widget build(BuildContext context) {
-    return coloredBox();
-  }
-
-  Widget coloredBox() {
-    return Container(
-        color: tile.color,
-        child: const Padding(
-          padding: EdgeInsets.all(70.0),
-        ));
+  int getIndexTile() {
+    return indexTile;
   }
 }
 
 class Ex6b extends StatelessWidget {
   static const String nomExercice = "Echanger deux tuiles d'un plateau";
 
-  const Ex6b({super.key});
+  const Ex6b({Key? key});
+
   @override
   Widget build(BuildContext context) {
     return const MyHomePage();
@@ -46,14 +68,28 @@ class Ex6b extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({Key? key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Widget> tiles = List<Widget>.generate(2, (index) => TileWidget(Tile.randomColor()));
+  late List<Tile> listTiles;
+  // int tileVide = Random().nextInt(16);
+  int tileVide = 6;
+  @override
+  void initState() {
+    super.initState();
+    listTiles = List<Tile>.generate(16, (index) {
+      if (index == tileVide) {
+        return Tile(index, true);
+      } else {
+        return Tile(index, false);
+      }
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,17 +98,63 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text(Ex6b.nomExercice),
         backgroundColor: const Color.fromARGB(255, 150, 131, 236),
       ),
-      body: Row(children: tiles),
-      floatingActionButton: FloatingActionButton(
-        onPressed: swapTiles,
-        child: const Icon(Icons.sentiment_very_satisfied)
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.count(
+          mainAxisSpacing: 2,
+          crossAxisSpacing: 2,
+          crossAxisCount: 4,
+          children: listTiles.map((tile) {
+            return createTileWidgetFrom(tile);
+          }).toList(),
+        ),
       ),
     );
   }
 
-  swapTiles() {
+  Widget createTileWidgetFrom(Tile tile) {
+    return InkWell(
+      child: tile.toWidget(),
+      onTap: () {
+        int index = tile.indexTile;
+        // print("Tapped on tile at index: $index");
+        if(index-1 >= 0 && listTiles[index-1].isEmpty){
+          swapTiles(index-1, index);
+        }else if(index+1 <= 4*4-1 && listTiles[index+1].isEmpty){
+          swapTiles(index+1, index);
+        }else if(index-4 >= 0 && listTiles[index-4].isEmpty){
+          swapTiles(index-4, index);
+        }else if(index+4 <= 4*4-1 && listTiles[index+4].isEmpty){
+          swapTiles(index+4, index);
+        }
+        // print("---");
+      },
+    );
+  }
+
+  swapTiles(indexEmpty, indexAChanger) {
+    print("Swapping $indexAChanger with: $indexEmpty");
     setState(() {
-      tiles.insert(1, tiles.removeAt(0));
+      Tile tileEmpty = listTiles[indexEmpty];
+      Tile tileToChange = listTiles[indexAChanger];
+
+      if(indexEmpty > indexAChanger){
+        listTiles.insert(indexEmpty, tileToChange);
+        listTiles.remove(tileEmpty);
+
+        listTiles.insert(indexAChanger, tileEmpty);
+        listTiles.remove(tileToChange);
+      }else{
+        listTiles.insert(indexAChanger, tileEmpty);
+        listTiles.remove(tileToChange);
+
+        listTiles.insert(indexEmpty, tileToChange);
+        listTiles.remove(tileEmpty);
+      }
+
+      int indexTemp = listTiles[indexAChanger].indexTile;
+      listTiles[indexAChanger].indexTile = listTiles[indexEmpty].indexTile;
+      listTiles[indexEmpty].indexTile = indexTemp;
     });
   }
 }
