@@ -76,8 +76,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late List<Tile> listTiles;
-  // int tileVide = Random().nextInt(16);
-  int tileVide = 6;
+  int tileVide = Random().nextInt(4*4);
   @override
   void initState() {
     super.initState();
