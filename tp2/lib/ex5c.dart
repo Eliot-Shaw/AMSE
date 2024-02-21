@@ -48,7 +48,6 @@ class _MyHomePageState extends State<Ex5c> {
         alignment: calculateAlignment(i),
       ));
     }
-
     return tiles;
   }
 
