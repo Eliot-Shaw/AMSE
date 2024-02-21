@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Ex5a extends StatelessWidget {
-  static const String nomExercice = "A - Génération du plateau de tuiles";
+  static const String nomExercice = "Génération du plateau de tuiles";
 
   const Ex5a({Key? key});
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Ex5b extends StatelessWidget {
-  static const String nomExercice = "B - Tuiles à partir d'une image";
+  static const String nomExercice = "Tuiles à partir d'une image";
   static const int tilesLigne = 4;
   static const String imageURL = "assets/images/wallebra.png";
 

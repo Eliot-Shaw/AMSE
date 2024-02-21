@@ -22,7 +22,7 @@ class Tile {
 }
 
 class Ex5c extends StatefulWidget {
-  static const String nomExercice = "C - Nb Tuiles Dynamiques";
+  static const String nomExercice = "Nb Tuiles Dynamiques";
 
   const Ex5c({super.key});
   
