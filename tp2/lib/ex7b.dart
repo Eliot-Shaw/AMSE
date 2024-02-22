@@ -50,7 +50,7 @@ class Tile {
 }
 
 class Ex7b extends StatelessWidget {
-  static const String nomExercice = "Jeu de taquin avec une image";
+  static const String nomExercice = "Jeu de taquin avec une image presque comlpete";
 
   const Ex7b({Key? key});
 
