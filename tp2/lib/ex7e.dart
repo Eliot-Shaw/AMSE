@@ -275,16 +275,26 @@ class Tile {
         ),
       );
     } else {
-      return FittedBox(
-        fit: BoxFit.fill,
-        child: Opacity(
-          opacity: 0.3,
-          child: ClipRect(
-            child: Align(
-              alignment: alignment,
-              widthFactor: taille,
-              heightFactor: taille,
-              child: Image.asset(imageURL, color: const Color.fromARGB(255, 150, 131, 236), colorBlendMode: BlendMode.overlay),
+      return Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: const Color.fromARGB(255, 150, 131, 236), width: 5.0),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: FittedBox(
+          fit: BoxFit.fill,
+          child: Opacity(
+            opacity: 0.3,
+            child: ClipRect(
+              child: Align(
+                alignment: alignment,
+                widthFactor: taille,
+                heightFactor: taille,
+                child: Image.asset(
+                  imageURL,
+                  color: const Color.fromARGB(255, 150, 131, 236),
+                  colorBlendMode: BlendMode.overlay,
+                ),
+              ),
             ),
           ),
         ),
