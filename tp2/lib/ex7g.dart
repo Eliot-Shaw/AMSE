@@ -1,11 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
-
-math.Random random = math.Random();
 
 class Ex7g extends StatelessWidget {
-  static const String nomExercice = "Possibilité de changer l'image";
+  static const String nomExercice = "Choisir une image";
 
   const Ex7g({Key? key});
 
@@ -27,17 +24,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> listeImageURLs = [
-    "assets/images/avion.jpg",
-    "assets/images/eve.jpg",
-    "assets/images/gina.jpg",
-    "assets/images/hotel.jpg",
-    "assets/images/montagnes.jpg",
-    "assets/images/nature.jpg",
-    "assets/images/wallebra.png", 
-    "assets/images/wallespace.jpg",
-    "assets/images/what_I_want.png",
-  ];
   late String imageURL = "assets/images/rainbow.jpg";
   
   int minGridSize = 2;
@@ -121,14 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SelectImagePage(imageList: listeImageURLs)),
-              ).then((selectedImage) {
-                if (selectedImage != null) {
-                  setState(() {
-                    imageURL = selectedImage;
-                  });
-                }
-              });
+                MaterialPageRoute(builder: (context) => SelectImagePage(updateImageUrl: updateImageUrl)),
+              );
             },
             child: const Text('Choisir une image'),
           ),
@@ -137,6 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void updateImageUrl(String newImageUrl) {
+    setState(() {
+      imageURL = newImageUrl;
+      regenerateTiles();
+    });
+  }
 
   Widget createTileWidgetFrom(Tile tile) {
     return InkWell(
@@ -285,7 +271,7 @@ class Tile {
   bool isEmpty = false;
 
   Tile(this.indexTile, this.isEmpty, this.indexPosFinale, this.imageURL, this.alignment) {
-    color = Color.fromARGB(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+    color = Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255), Random().nextInt(255));
   }
 
   Widget toWidget(double taille) {
@@ -331,11 +317,67 @@ class Tile {
 }
 
 class SelectImagePage extends StatelessWidget {
-  final List<String> imageList;
-  const SelectImagePage({Key? key, required this.imageList}) : super(key: key);
+  final List<String> imageList = [
+    "assets/images/avion.jpg",
+    "assets/images/eve.jpg",
+    "assets/images/gina.jpg",
+    "assets/images/hotel.png",
+    "assets/images/montagnes.jpg",
+    "assets/images/nature.jpg",
+    "assets/images/wallebra.png", 
+    "assets/images/wallespace.jpg",
+    "assets/images/rainbow.jpg",
+  ];
+
+  final Function(String) updateImageUrl;
+
+  SelectImagePage({Key? key, required this.updateImageUrl}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Construisez votre interface utilisateur pour la sélection d'image ici
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sélectionner une image'),
+        backgroundColor: const Color.fromARGB(255, 150, 131, 236),
+      ),
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 4.0,
+          mainAxisSpacing: 4.0,
+        ),
+        itemCount: imageList.length+1,
+        itemBuilder: (BuildContext context, int index) {
+          if(index == 0) {
+            return GestureDetector(
+              onTap: () {
+                updateImageUrl("assets/images/camera.png");
+                Navigator.pop(context);
+              },
+              child: GridTile(
+                child: Image.asset(
+                  "assets/images/camera.png",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            );
+          } else{
+            String imageURL = imageList[index-1];
+            return GestureDetector(
+              onTap: () {
+                updateImageUrl(imageURL);
+                Navigator.pop(context);
+              },
+              child: GridTile(
+                child: Image.asset(
+                  imageURL,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
   }
 }
