@@ -2,54 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:flutter/widgets.dart';
-
 math.Random random = math.Random();
-
-class Tile {
-  late String imageURL;
-  late Alignment alignment;
-  late int indexTile;
-  late int indexPosFinale;
-  late Color color;
-  bool isEmpty = false;
-
-  Tile(this.indexTile, this.isEmpty, this.indexPosFinale, this.imageURL, this.alignment) {
-    color = Color.fromARGB(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-  }
-
-  Widget toWidget(double taille) {
-    if (!isEmpty) {
-      return FittedBox(
-        fit: BoxFit.fill,
-        child: ClipRect(
-          child: Align(
-            alignment: alignment,
-            widthFactor: taille,
-            heightFactor: taille,
-            child: Image.asset(imageURL),
-          ),
-        ),
-      );
-    } else {
-      return FittedBox(
-        fit: BoxFit.fill,
-        child: Opacity(
-          opacity: 0.3,
-          child: ClipRect(
-            child: Align(
-              alignment: alignment,
-              widthFactor: taille,
-              heightFactor: taille,
-              child: Image.asset(imageURL, color: const Color.fromARGB(255, 150, 131, 236), colorBlendMode: BlendMode.overlay),
-            ),
-          ),
-        ),
-      );
-    }
-  }
-
-}
 
 class Ex7c extends StatelessWidget {
   static const String nomExercice = "Jeu de taquin avec une image";
@@ -78,6 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int sliderMin = 2;
   int sliderMax = 10;
   int _currentSliderValueGridCount = 3;
+  int difficulteMixage = 20;
 
   late List<Tile> listTiles;
   @override
@@ -143,37 +97,40 @@ class _MyHomePageState extends State<MyHomePage> {
         if(listTiles[index].isEmpty){
           print("Tu as trouvé la tile vide !");
         }
-        if(index-1 >= 0 && listTiles[index-1].isEmpty){
-          if(index%_currentSliderValueGridCount != 0){
-            swapTiles(index-1, index);
-          }
-        }else if(index+1 <= _currentSliderValueGridCount*_currentSliderValueGridCount-1 && listTiles[index+1].isEmpty){
-          if((index+1)%_currentSliderValueGridCount != 0){
-            swapTiles(index+1, index);
-          }
-        }else if(index-_currentSliderValueGridCount >= 0 && listTiles[index-_currentSliderValueGridCount].isEmpty){
-          swapTiles(index-_currentSliderValueGridCount, index);
-        }else if(index+_currentSliderValueGridCount <= _currentSliderValueGridCount*_currentSliderValueGridCount-1 && listTiles[index+_currentSliderValueGridCount].isEmpty){
-          swapTiles(index+_currentSliderValueGridCount, index);
-        }
+        trySwap(index);
+        partieGagnee();
       },
     );
   }
 
-  void shuffleSilent(index){
+  bool trySwap(index){
+    if (index < 0){
+      print("index<0");
+      return false;
+    };
+    if (index > _currentSliderValueGridCount*_currentSliderValueGridCount-1){
+      print("index>${_currentSliderValueGridCount*_currentSliderValueGridCount-1}");
+      return false;
+    };
+    bool succeed = false;
     if(index-1 >= 0 && listTiles[index-1].isEmpty){
       if(index%_currentSliderValueGridCount != 0){
-        swapTiles(index-1, index, silent: true);
+        succeed = true;
+        swapTiles(index-1, index);
       }
     }else if(index+1 <= _currentSliderValueGridCount*_currentSliderValueGridCount-1 && listTiles[index+1].isEmpty){
       if((index+1)%_currentSliderValueGridCount != 0){
-        swapTiles(index+1, index, silent: true);
+        succeed = true;
+        swapTiles(index+1, index);
       }
     }else if(index-_currentSliderValueGridCount >= 0 && listTiles[index-_currentSliderValueGridCount].isEmpty){
-      swapTiles(index-_currentSliderValueGridCount, index, silent: true);
+      succeed = true;
+      swapTiles(index-_currentSliderValueGridCount, index);
     }else if(index+_currentSliderValueGridCount <= _currentSliderValueGridCount*_currentSliderValueGridCount-1 && listTiles[index+_currentSliderValueGridCount].isEmpty){
-      swapTiles(index+_currentSliderValueGridCount, index, silent: true);
+      succeed = true;
+      swapTiles(index+_currentSliderValueGridCount, index);
     }
+    return succeed;
   }
 
   void regenerateTiles() {
@@ -187,9 +144,39 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       });
       
-      for(int i = 0; i<10000; i++){ //fatigue : abandon on shuffle comme des sacs
-        int index = Random().nextInt(_currentSliderValueGridCount*_currentSliderValueGridCount);
-        shuffleSilent(index);
+      for(int i = 0; i < difficulteMixage; i++) {
+        int direction;
+        bool shuffled = false;
+        int offset;
+        while (!shuffled) {
+          direction = Random().nextInt(4);
+          offset = 0;
+          switch (direction) {
+            case 0:
+              offset = -1;
+              break;
+            case 1:
+              offset = 1;
+              break;
+            case 2:
+              offset = -_currentSliderValueGridCount;
+              break;
+            case 3:
+              offset = _currentSliderValueGridCount;
+              break;
+            default:
+              print("Erreur: le générateur de nombres aléatoires est cassé");
+          }
+          shuffled = trySwap(tileVide + offset);
+          for(int j = 0; j< _currentSliderValueGridCount*_currentSliderValueGridCount; j++){
+            if(listTiles[j].isEmpty){
+              tileVide = j;
+              break;
+            }
+          }
+          print("while i:$i current:$_currentSliderValueGridCount, shuffled = trySwap($tileVide + $offset); ${listTiles[tileVide].isEmpty}");
+        }
+
       }
 
       for (int i = 0; i < listTiles.length; i++) {
@@ -216,7 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return true;
   }
 
-  void swapTiles(indexEmpty, indexAChanger, {bool silent = false}) {
+  void swapTiles(indexEmpty, indexAChanger) {
     // print("Swapping $indexAChanger with: $indexEmpty");
     setState(() {
       Tile tileEmpty = listTiles[indexEmpty];
@@ -240,6 +227,49 @@ class _MyHomePageState extends State<MyHomePage> {
       listTiles[indexAChanger].indexTile = listTiles[indexEmpty].indexTile;
       listTiles[indexEmpty].indexTile = indexTemp;
     });
-    if(!silent){partieGagnee();}
+  }
+}
+
+class Tile {
+  late String imageURL;
+  late Alignment alignment;
+  late int indexTile;
+  late int indexPosFinale;
+  late Color color;
+  bool isEmpty = false;
+
+  Tile(this.indexTile, this.isEmpty, this.indexPosFinale, this.imageURL, this.alignment) {
+    color = Color.fromARGB(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+  }
+
+  Widget toWidget(double taille) {
+    if (!isEmpty) {
+      return FittedBox(
+        fit: BoxFit.fill,
+        child: ClipRect(
+          child: Align(
+            alignment: alignment,
+            widthFactor: taille,
+            heightFactor: taille,
+            child: Image.asset(imageURL),
+          ),
+        ),
+      );
+    } else {
+      return FittedBox(
+        fit: BoxFit.fill,
+        child: Opacity(
+          opacity: 0.3,
+          child: ClipRect(
+            child: Align(
+              alignment: alignment,
+              widthFactor: taille,
+              heightFactor: taille,
+              child: Image.asset(imageURL, color: const Color.fromARGB(255, 150, 131, 236), colorBlendMode: BlendMode.overlay),
+            ),
+          ),
+        ),
+      );
+    }
   }
 }
