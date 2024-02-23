@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -277,43 +278,84 @@ class Tile {
   }
 
   Widget toWidget(double taille) {
-    if (!isEmpty) {
-      return FittedBox(
-        fit: BoxFit.fill,
-        child: ClipRect(
-          child: Align(
-            alignment: alignment,
-            widthFactor: taille,
-            heightFactor: taille,
-            child: Image.asset(imageURL),
-          ),
-        ),
-      );
-    } else {
-      return Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: const Color.fromARGB(255, 150, 131, 236), width: 5.0),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: FittedBox(
+    if (imageURL.startsWith("assets/")){
+      if (!isEmpty) {
+        return FittedBox(
           fit: BoxFit.fill,
-          child: Opacity(
-            opacity: 0.3,
-            child: ClipRect(
-              child: Align(
-                alignment: alignment,
-                widthFactor: taille,
-                heightFactor: taille,
-                child: Image.asset(
-                  imageURL,
-                  color: const Color.fromARGB(255, 150, 131, 236),
-                  colorBlendMode: BlendMode.overlay,
+          child: ClipRect(
+            child: Align(
+              alignment: alignment,
+              widthFactor: taille,
+              heightFactor: taille,
+              child: Image.asset(imageURL),
+            ),
+          ),
+        );
+      } else {
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color.fromARGB(255, 150, 131, 236), width: 5.0),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: FittedBox(
+            fit: BoxFit.fill,
+            child: Opacity(
+              opacity: 0.3,
+              child: ClipRect(
+                child: Align(
+                  alignment: alignment,
+                  widthFactor: taille,
+                  heightFactor: taille,
+                  child: Image.asset(
+                    imageURL,
+                    color: const Color.fromARGB(255, 150, 131, 236),
+                    colorBlendMode: BlendMode.overlay,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      );
+        );
+      }
+    } else {
+      if (!isEmpty) {
+        return FittedBox(
+          fit: BoxFit.fill,
+          child: ClipRect(
+            child: Align(
+              alignment: alignment,
+              widthFactor: taille,
+              heightFactor: taille,
+              child: Image.file(File(imageURL)),
+            ),
+          ),
+        );
+      } else {
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color.fromARGB(255, 150, 131, 236), width: 5.0),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: FittedBox(
+            fit: BoxFit.fill,
+            child: Opacity(
+              opacity: 0.3,
+              child: ClipRect(
+                child: Align(
+                  alignment: alignment,
+                  widthFactor: taille,
+                  heightFactor: taille,
+                  child: Image.file(
+                    File(imageURL),
+                    color: const Color.fromARGB(255, 150, 131, 236),
+                    colorBlendMode: BlendMode.overlay,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      }
     }
   }
 }
@@ -368,6 +410,7 @@ class _CameraScreenState extends State<CameraScreen> {
             await _initializeControllerFuture;
             final image = await _controller.takePicture();
             widget.updateImageUrl(image.path);
+            print(image.path);
             Navigator.pop(context);
           } catch (e) {
             print(e);
