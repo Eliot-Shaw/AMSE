@@ -4,10 +4,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
-class Ex7h extends StatelessWidget {
+class Ex7i extends StatelessWidget {
   static const String nomExercice = "Prendre une photo";
 
-  const Ex7h({Key? key});
+  const Ex7i({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Ex7h.nomExercice),
+        title: const Text(Ex7i.nomExercice),
         backgroundColor: const Color.fromARGB(255, 150, 131, 236),
       ),
       body: Column(
