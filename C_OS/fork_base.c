@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+// fixed :D
  
 int main(void) {
   pid_t pid = fork();
