@@ -287,7 +287,7 @@ class Tile {
               alignment: alignment,
               widthFactor: taille,
               heightFactor: taille,
-              child: Image.asset(imageURL),
+              child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.asset(imageURL))),
             ),
           ),
         );
@@ -306,12 +306,12 @@ class Tile {
                   alignment: alignment,
                   widthFactor: taille,
                   heightFactor: taille,
-                  child: Image.asset(
+                  child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.asset(
                     imageURL,
                     color: const Color.fromARGB(255, 150, 131, 236),
-                    colorBlendMode: BlendMode.clear,
-                    // colorBlendMode: BlendMode.overlay,
-                  ),
+                    // colorBlendMode: BlendMode.clear,
+                    colorBlendMode: BlendMode.overlay,
+                  ))),
                 ),
               ),
             ),
@@ -321,13 +321,13 @@ class Tile {
     } else {
       if (!isEmpty) {
         return FittedBox(
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
           child: ClipRect(
             child: Align(
               alignment: alignment,
               widthFactor: taille,
               heightFactor: taille,
-              child: Image.file(File(imageURL)),
+              child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.file(File(imageURL)))),
             ),
           ),
         );
@@ -338,7 +338,7 @@ class Tile {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: FittedBox(
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
             child: Opacity(
               opacity: 0.3,
               child: ClipRect(
@@ -346,11 +346,12 @@ class Tile {
                   alignment: alignment,
                   widthFactor: taille,
                   heightFactor: taille,
-                  child: Image.file(
+                  child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.file(
                     File(imageURL),
                     color: const Color.fromARGB(255, 150, 131, 236),
+                    // colorBlendMode: BlendMode.clear,
                     colorBlendMode: BlendMode.overlay,
-                  ),
+                  ))),
                 ),
               ),
             ),
