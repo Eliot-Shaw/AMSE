@@ -4,7 +4,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 // fixed :D
- 
+//  and I am >:D
 int main(void) {
   pid_t pid = fork();
  
