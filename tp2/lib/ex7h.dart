@@ -309,7 +309,8 @@ class Tile {
                   child: Image.asset(
                     imageURL,
                     color: const Color.fromARGB(255, 150, 131, 236),
-                    colorBlendMode: BlendMode.overlay,
+                    colorBlendMode: BlendMode.clear,
+                    // colorBlendMode: BlendMode.overlay,
                   ),
                 ),
               ),
