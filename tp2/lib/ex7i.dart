@@ -3,9 +3,10 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/widgets.dart';
 
 class Ex7i extends StatelessWidget {
-  static const String nomExercice = "Prendre une photo";
+  static const String nomExercice = "Choisir image ou photo";
 
   const Ex7i({Key? key});
 
@@ -27,15 +28,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late String imageURL = "assets/images/rainbow.jpg";
+  late String imageURL = (Random().nextInt(100) == 0) ? "assets/images/what_I_want.jpg" : "assets/images/rainbow.jpg";
   
   int minGridSize = 2;
   int maxGridSize = 10;
   int _currentSliderValueGridCount = 3;
-  double minDiffMixage = 0.99;
+  double minDiffMixage = 1.0;
   double maxDiffMixage = 6.9077552789821370520539743640530926228033044658863189280999837029;
   double _currentSliderValueDiffMix = 3;
-  int difficulteMixage = 15;
+  int difficulteMixage = 28;
   int pas = 0;
 
   late List<Tile> listTiles;
@@ -57,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
               child: GridView.count(
                 mainAxisSpacing: 2,
                 crossAxisSpacing: 2,
@@ -110,10 +111,10 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CameraScreen(updateImageUrl: updateImageUrl)),
+                MaterialPageRoute(builder: (context) => SelectImagePage(updateImageUrl: updateImageUrl)),
               );
             },
-            child: const Text('Prendre une photo'),
+            child: const Text('Choisir une image'),
           ),
         ],
       ),
@@ -139,6 +140,15 @@ class _MyHomePageState extends State<MyHomePage> {
         partieGagnee();
       },
     );
+  }
+
+  bool partieGagnee(){
+    if (listTiles[0].indexPosFinale != 0) return false;
+    for(int i = 1; i< listTiles.length; i++) {
+      if(listTiles[i].indexPosFinale-listTiles[i-1].indexPosFinale != 1) return false;
+    }
+    print("youhou");
+    return true;
   }
 
   bool trySwap(index){
@@ -230,15 +240,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Alignment(horizontalAlignment, verticalAlignment);
   }
 
-  bool partieGagnee(){
-    if (listTiles[0].indexPosFinale != 0) return false;
-    for(int i = 1; i< listTiles.length; i++) {
-      if(listTiles[i].indexPosFinale-listTiles[i-1].indexPosFinale != 1) return false;
-    }
-    print("youhou");
-    return true;
-  }
-
   void swapTiles(indexEmpty, indexAChanger) {
     pas++;
     setState(() {
@@ -310,7 +311,6 @@ class Tile {
                     imageURL,
                     color: const Color.fromARGB(255, 150, 131, 236),
                     colorBlendMode: BlendMode.overlay,
-                    // colorBlendMode: BlendMode.overlay,
                   ))),
                 ),
               ),
@@ -411,7 +411,6 @@ class _CameraScreenState extends State<CameraScreen> {
             await _initializeControllerFuture;
             final image = await _controller.takePicture();
             widget.updateImageUrl(image.path);
-            print(image.path);
             Navigator.pop(context);
           } catch (e) {
             print(e);
@@ -427,4 +426,73 @@ class _CameraScreenState extends State<CameraScreen> {
     _controller.dispose();
     super.dispose();
   }
+}
+
+class SelectImagePage extends StatelessWidget {
+  final List<String> imageList = [
+    "assets/images/avion.jpg",
+    "assets/images/eve.jpg",
+    "assets/images/gina.jpg",
+    "assets/images/hotel.png",
+    "assets/images/montagnes.jpg",
+    "assets/images/nature.jpg",
+    "assets/images/wallebra.png", 
+    "assets/images/wallespace.jpg",
+    "assets/images/rainbow.jpg",
+    "assets/images/camera.png",
+  ];
+
+  final Function(String) updateImageUrl;
+
+  SelectImagePage({Key? key, required this.updateImageUrl}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sélectionner une image'),
+        backgroundColor: const Color.fromARGB(255, 150, 131, 236),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 4.0,
+              ),
+              itemCount: imageList.length,
+              itemBuilder: (BuildContext context, int index) {
+                String imageURL = imageList[index];
+                return GestureDetector(
+                  onTap: () {
+                    updateImageUrl(imageURL);
+                    Navigator.pop(context);
+                  },
+                  child: GridTile(
+                    child: Image.asset(
+                      imageURL,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CameraScreen(updateImageUrl: updateImageUrl)),
+              );
+            },
+            child: const Text('Prendre une photo'),
+          ),
+        ],
+      ),
+    );
+  }
+
 }
