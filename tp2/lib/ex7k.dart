@@ -183,56 +183,70 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void regenerateTiles() {
-    int tileVide = Random().nextInt(_currentSliderValueGridCount*_currentSliderValueGridCount);
+    int idTileVide = Random().nextInt(_currentSliderValueGridCount*_currentSliderValueGridCount);
     setState(() {
+      // creer des tiles
       listTiles = List<Tile>.generate(_currentSliderValueGridCount * _currentSliderValueGridCount, (index) {
-        if (index == tileVide) {
+        if (index == idTileVide) {
           return Tile(index, true, index, imageURL, calculateAlignment(index));
         } else {
           return Tile(index, false, index, imageURL, calculateAlignment(index));
         }
       });
       
-      for(int i = 0; i < difficulteMixage; i++) {
-        int direction;
-        bool shuffled = false;
-        int offset;
-        while (!shuffled) {
-          direction = Random().nextInt(4);
-          offset = 0;
-          switch (direction) {
-            case 0:
-              offset = -1;
-              break;
-            case 1:
-              offset = 1;
-              break;
-            case 2:
-              offset = -_currentSliderValueGridCount;
-              break;
-            case 3:
-              offset = _currentSliderValueGridCount;
-              break;
-            default:
-              // ignore: avoid_print
-              print("Erreur: le générateur de nombres aléatoires est cassé");
-          }
-          shuffled = trySwap(tileVide + offset);
-          for(int j = 0; j< _currentSliderValueGridCount*_currentSliderValueGridCount; j++){
-            if(listTiles[j].isEmpty){
-              tileVide = j;
-              break;
-            }
-          }
+      bool dejaRange = true;
+      while(dejaRange){
+        // mixer les tiles
+        shuffleTiles(idTileVide);
+
+        //réassigner les ID aux tiles
+        for (int i = 0; i < listTiles.length; i++) {
+          listTiles[i].indexTile = i;
         }
-
-      }
-
-      for (int i = 0; i < listTiles.length; i++) {
-        listTiles[i].indexTile = i;
+        
+        if (listTiles[0].indexPosFinale != 0){dejaRange = false;}
+        for(int i = 1; i< listTiles.length; i++) {
+          if(listTiles[i].indexPosFinale-listTiles[i-1].indexPosFinale != 1){dejaRange = false;}
+        }
       }
       pas = 0;
     });
+  }
+
+  void shuffleTiles(int idTileVide){
+    for(int i = 0; i < difficulteMixage; i++) {
+      int direction;
+      bool shuffled = false;
+      int offset;
+      while (!shuffled) {
+        direction = Random().nextInt(4);
+        offset = 0;
+        switch (direction) {
+          case 0:
+            offset = -1;
+            break;
+          case 1:
+            offset = 1;
+            break;
+          case 2:
+            offset = -_currentSliderValueGridCount;
+            break;
+          case 3:
+            offset = _currentSliderValueGridCount;
+            break;
+          default:
+            // ignore: avoid_print
+            print("Erreur: le générateur de nombres aléatoires est cassé");
+        }
+        shuffled = trySwap(idTileVide + offset);
+        for(int j = 0; j< _currentSliderValueGridCount*_currentSliderValueGridCount; j++){
+          if(listTiles[j].isEmpty){
+            idTileVide = j;
+            break;
+          }
+        }
+      }
+    }
   }
 
   Alignment calculateAlignment(int index) {
@@ -447,7 +461,7 @@ class FileScreen extends StatefulWidget {
 
 class _FileScreenState extends State<FileScreen> {
   late String _imagePath = '';
-  late bool hidden = true;
+  late Color couleurTexteInfo = const Color.fromARGB(255, 150, 131, 236);
 
   Future<void> _getImageFromGallery() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -473,7 +487,9 @@ class _FileScreenState extends State<FileScreen> {
         Navigator.pop(context);
       }
     }
-    hidden = false;
+    setState(() {
+      couleurTexteInfo = const Color.fromARGB(255, 255, 0, 0);
+    });
     // User canceled the picker or had incorrect file extention (ce saligaud)
   }
 
@@ -487,7 +503,10 @@ class _FileScreenState extends State<FileScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Portez attention sur le bon type de fichier !", style: TextStyle(color: hidden?Colors.white:const Color.fromARGB(255, 150, 131, 236))),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Portez attention au type de fichier !", style: TextStyle(color: couleurTexteInfo)),
+            ),
             ElevatedButton(
               onPressed: _getImageFromGallery,
               child: const Text('Choisir une image depuis la galerie'),
