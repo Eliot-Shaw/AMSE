@@ -5,7 +5,7 @@ class Ex5b extends StatelessWidget {
   static const int tilesLigne = 4;
   static const String imageURL = "assets/images/wallebra.png";
 
-  const Ex5b({Key? key});
+  const Ex5b({super.key});
   String getExerciceName() {
     return nomExercice;
   }
@@ -70,7 +70,7 @@ class Tile extends StatelessWidget {
   final String imageURL;
   final Alignment alignment;
 
-  const Tile({required this.imageURL, required this.alignment});
+  const Tile({super.key, required this.imageURL, required this.alignment});
 
   @override
   Widget build(BuildContext context) {

@@ -1,18 +1,19 @@
+// ignore_for_file: avoid_print, library_private_types_in_public_api
+
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/widgets.dart';
 
 class Ex7i extends StatelessWidget {
   static const String nomExercice = "Choisir image ou photo";
 
-  const Ex7i({Key? key});
+  const Ex7i({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MyHomePage();
+    return const MyHomePage();
   }
 
   String getExerciceName(){
@@ -21,7 +22,7 @@ class Ex7i extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key});
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -154,10 +155,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool trySwap(index){
     if (index < 0){
       return false;
-    };
+    }
     if (index > _currentSliderValueGridCount*_currentSliderValueGridCount-1){
       return false;
-    };
+    }
     bool succeed = false;
     if(index-1 >= 0 && listTiles[index-1].isEmpty){
       if(index%_currentSliderValueGridCount != 0){
@@ -364,7 +365,7 @@ class Tile {
 class CameraScreen extends StatefulWidget {
   final Function(String) updateImageUrl;
 
-  const CameraScreen({Key? key, required this.updateImageUrl}) : super(key: key);
+  const CameraScreen({super.key, required this.updateImageUrl});
 
   @override
   _CameraScreenState createState() => _CameraScreenState();
@@ -411,6 +412,7 @@ class _CameraScreenState extends State<CameraScreen> {
             await _initializeControllerFuture;
             final image = await _controller.takePicture();
             widget.updateImageUrl(image.path);
+            // ignore: use_build_context_synchronously
             Navigator.pop(context);
           } catch (e) {
             print(e);
@@ -444,7 +446,7 @@ class SelectImagePage extends StatelessWidget {
 
   final Function(String) updateImageUrl;
 
-  SelectImagePage({Key? key, required this.updateImageUrl}) : super(key: key);
+  SelectImagePage({super.key, required this.updateImageUrl});
 
   @override
   Widget build(BuildContext context) {

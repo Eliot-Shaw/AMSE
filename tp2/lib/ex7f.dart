@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -7,7 +9,7 @@ math.Random random = math.Random();
 class Ex7f extends StatelessWidget {
   static const String nomExercice = "Possibilité de changer l'image";
 
-  const Ex7f({Key? key});
+  const Ex7f({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class Ex7f extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key});
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -140,10 +142,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool trySwap(index){
     if (index < 0){
       return false;
-    };
+    }
     if (index > _currentSliderValueGridCount*_currentSliderValueGridCount-1){
       return false;
-    };
+    }
     bool succeed = false;
     if(index-1 >= 0 && listTiles[index-1].isEmpty){
       if(index%_currentSliderValueGridCount != 0){

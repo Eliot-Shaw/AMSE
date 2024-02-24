@@ -447,6 +447,7 @@ class FileScreen extends StatefulWidget {
 
 class _FileScreenState extends State<FileScreen> {
   late String _imagePath = '';
+  late bool hidden = true;
 
   Future<void> _getImageFromGallery() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -468,11 +469,12 @@ class _FileScreenState extends State<FileScreen> {
           _imagePath = file.path;
         });
         widget.updateImageUrl(_imagePath);
+        // ignore: use_build_context_synchronously
         Navigator.pop(context);
-      } else {
-          // User canceled the picker (ce saligaud)
       }
     }
+    hidden = false;
+    // User canceled the picker or had incorrect file extention (ce saligaud)
   }
 
   @override
@@ -485,6 +487,7 @@ class _FileScreenState extends State<FileScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text("Portez attention sur le bon type de fichier !", style: TextStyle(color: hidden?Colors.white:const Color.fromARGB(255, 150, 131, 236))),
             ElevatedButton(
               onPressed: _getImageFromGallery,
               child: const Text('Choisir une image depuis la galerie'),

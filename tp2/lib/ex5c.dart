@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class Tile {
@@ -111,6 +113,7 @@ class _MyHomePageState extends State<Ex5c> {
     return InkWell(
       child: tile.croppedImageTile(1 / _currentSliderValueGridCount),
       onTap: () {
+        // ignore: avoid_print
         print("tapped on tile");
       },
     );

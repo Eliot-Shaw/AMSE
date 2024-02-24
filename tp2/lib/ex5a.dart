@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Ex5a extends StatelessWidget {
   static const String nomExercice = "Génération du plateau de tuiles";
 
-  const Ex5a({Key? key});
+  const Ex5a({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class Ex5a extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key});
+  const MyHomePage({super.key});
 
   static const int ratioTuiles = 5;
   static const double tailleTile = 75;

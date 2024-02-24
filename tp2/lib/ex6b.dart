@@ -55,7 +55,7 @@ class Tile {
 class Ex6b extends StatelessWidget {
   static const String nomExercice = "Echanger deux tuiles d'un plateau";
 
-  const Ex6b({Key? key});
+  const Ex6b({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class Ex6b extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key});
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -120,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // print("Tapped on tile at index: $index");
         
         if(listTiles[index].isEmpty){
+          // ignore: avoid_print
           print("Tu as trouvé la tile vide !");
         }
         if(index-1 >= 0 && listTiles[index-1].isEmpty){
@@ -140,6 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   swapTiles(indexEmpty, indexAChanger) {
+    // ignore: avoid_print
     print("Swapping $indexAChanger with: $indexEmpty");
     setState(() {
       Tile tileEmpty = listTiles[indexEmpty];

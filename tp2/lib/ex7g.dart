@@ -1,10 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Ex7g extends StatelessWidget {
   static const String nomExercice = "Choisir une image";
 
-  const Ex7g({Key? key});
+  const Ex7g({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class Ex7g extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key});
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -141,10 +143,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool trySwap(index){
     if (index < 0){
       return false;
-    };
+    }
     if (index > _currentSliderValueGridCount*_currentSliderValueGridCount-1){
       return false;
-    };
+    }
     bool succeed = false;
     if(index-1 >= 0 && listTiles[index-1].isEmpty){
       if(index%_currentSliderValueGridCount != 0){
@@ -331,7 +333,7 @@ class SelectImagePage extends StatelessWidget {
 
   final Function(String) updateImageUrl;
 
-  SelectImagePage({Key? key, required this.updateImageUrl}) : super(key: key);
+  SelectImagePage({super.key, required this.updateImageUrl});
 
   @override
   Widget build(BuildContext context) {
