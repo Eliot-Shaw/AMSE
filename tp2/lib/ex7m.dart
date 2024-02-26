@@ -649,6 +649,9 @@ class SelectImagePage extends StatelessWidget {
     "assets/images/wallespace.jpg",
     "assets/images/rainbow.jpg",
     "assets/images/camera.png",
+    "assets/images/voiture.jpg",
+    "assets/images/banana.jpg",
+    "assets/images/cow.jpg",
   ];
 
   final Function(String) updateImageUrl;
