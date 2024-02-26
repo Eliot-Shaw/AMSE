@@ -21,7 +21,6 @@ import 'package:tp2/ex7i.dart';
 import 'package:tp2/ex7j.dart';
 import 'package:tp2/ex7k.dart';
 import 'package:tp2/ex7l.dart';
-import 'package:tp2/ex7m.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,7 +54,6 @@ class MyApp extends StatelessWidget {
       '/ex7j': (context) => const Ex7j(),
       '/ex7k': (context) => const Ex7k(),
       '/ex7l': (context) => const Ex7l(),
-      '/ex7m': (context) => const Ex7m(),
     };
 
     return MaterialApp(
@@ -84,9 +82,7 @@ class ExerciseListPage extends StatelessWidget {
             Column(
               children: [
                 ListTile(
-                  title: Center(
-                      child: Text((routes[route]!(context) as dynamic)
-                          .getExerciceName())),
+                  title: Center(child: Text((routes[route]!(context) as dynamic).getExerciceName())),
                   onTap: () {
                     Navigator.pushNamed(context, route);
                   },
@@ -105,3 +101,4 @@ class ExerciseListPage extends StatelessWidget {
     );
   }
 }
+
