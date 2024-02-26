@@ -88,20 +88,26 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: const Text('Nouvelle Partie'),
           ),
-          Slider(
-            divisions: maxGridSize - minGridSize,
-            value: _currentSliderValueGridCount.toDouble(),
-            min: minGridSize.toDouble(),
-            max: maxGridSize.toDouble(),
-            onChanged: (double value) {
-              setState(() {
-                if (_currentSliderValueGridCount != value.toInt()) {
-                  _currentSliderValueGridCount = value.toInt();
-                  regenerateTiles();
-                }
-              });
-            },
-            label: "${_currentSliderValueGridCount.toInt()}",
+          Row(
+            children: [
+              const Image(
+                  image: AssetImage('assets/quality/grille_taille.png')),
+              Slider(
+                divisions: maxGridSize - minGridSize,
+                value: _currentSliderValueGridCount.toDouble(),
+                min: minGridSize.toDouble(),
+                max: maxGridSize.toDouble(),
+                onChanged: (double value) {
+                  setState(() {
+                    if (_currentSliderValueGridCount != value.toInt()) {
+                      _currentSliderValueGridCount = value.toInt();
+                      regenerateTiles();
+                    }
+                  });
+                },
+                label: "${_currentSliderValueGridCount.toInt()}",
+              ),
+            ],
           ),
           Slider(
             divisions: 5,
