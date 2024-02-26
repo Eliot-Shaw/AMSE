@@ -40,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int difficulteMixage = 28;
   int pas = 0;
   int annulerRestant = 10;
+  int idTileVideOverride = -1;
 
   late List<Tile> listTiles;
   @override
@@ -203,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void regenerateTiles() {
-    int idTileVide = Random().nextInt(_currentSliderValueGridCount*_currentSliderValueGridCount);
+    int idTileVide = (idTileVideOverride == -1)?Random().nextInt(_currentSliderValueGridCount*_currentSliderValueGridCount) : idTileVideOverride;
     setState(() {
       // creer des tiles
       listTiles = List<Tile>.generate(_currentSliderValueGridCount * _currentSliderValueGridCount, (index) {
