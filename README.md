@@ -3,6 +3,11 @@ Eliot SHAW
 Clarice Goulet
 
 
+# Thing todo
+- animate tiles
+- animate revert
+- add confetti on win
+
 
 # Methodes de resolutions d'un jeu de taquin :
 ## A*
@@ -17,5 +22,7 @@ Résoudre une colonne :
 alterner les deux resolutions et finir l carré en tournant en boucle
 
 
-# Tricks
+## Tricks
 {[Knight move](https://www.youtube.com/watch?v=yma9uAgb11Q)}
+
+
