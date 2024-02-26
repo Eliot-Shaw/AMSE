@@ -28,9 +28,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late String imageURL = (Random().nextInt(100) == 0) ? "assets/images/what_I_want.jpg" : "assets/images/rainbow.jpg";
+  late String imageURL = (Random().nextInt(100) == 0)
+      ? "assets/images/what_I_want.jpg"
+      : "assets/images/rainbow.jpg";
   late Map<int, int> listeCoups = {};
-  
+
   int minGridSize = 2;
   int maxGridSize = 10;
   int _currentSliderValueGridCount = 3;
@@ -39,13 +41,23 @@ class _MyHomePageState extends State<MyHomePage> {
   double _currentSliderValueDiffMix = 3;
   int difficulteMixage = 28;
   int pas = 0;
-  int annulerRestant = 10;
+  final stopwatch = Stopwatch();
+  double tempsEcoule = 0;
+  String tempsEcouleString = "";
+  int annulerRestantBase = 10;
+  late int annulerRestant;
   int idTileVideOverride = -1;
 
   late List<Tile> listTiles;
   @override
   void initState() {
     super.initState();
+
+    Timer.periodic(const Duration(milliseconds: 1), (timer) {{
+      tempsEcoule = stopwatch.elapsedMicroseconds.toDouble();
+      setState(() {
+        tempsEcouleString = "${tempsEcoule~/3600}:${tempsEcoule~/60}:$tempsEcoule";
+      });}});
     regenerateTiles();
   }
 
@@ -78,6 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: Text('Annuler ($annulerRestant)'),
           ),
+          Text('Temps écoulé : $tempsEcouleString'),
           Text('Nombre de pas : $pas'),
           ElevatedButton(
             onPressed: () {
@@ -154,11 +167,14 @@ class _MyHomePageState extends State<MyHomePage> {
       if(listTiles[i].indexPosFinale-listTiles[i-1].indexPosFinale != 1) return false;
     }
     int pasWin = pas;
+    String tempsEcouleStringWin = tempsEcouleString;
+    stopwatch.stop();
     String imageURLWin = imageURL;
     regenerateTiles();
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PageGagnante(pasWin, imageURLWin)),
+      MaterialPageRoute(
+          builder: (context) => PageGagnante(pasWin, tempsEcouleStringWin, imageURLWin)),
     );
     return true;
   }
@@ -232,6 +248,9 @@ class _MyHomePageState extends State<MyHomePage> {
       }
       pas = 0;
       listeCoups.clear();
+      annulerRestant = annulerRestantBase;
+      stopwatch.reset();
+      stopwatch.start();
     });
   }
 
@@ -620,11 +639,12 @@ class SelectImagePage extends StatelessWidget {
 }
 
 
-class PageGagnante extends StatelessWidget{
+class PageGagnante extends StatelessWidget {
   final String imageURL;
+  final String tempsEcouleStringWin;
   final int pas;
 
-  const PageGagnante(this.pas, this.imageURL, {super.key});
+  const PageGagnante(this.pas, this.tempsEcouleStringWin, this.imageURL, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -638,8 +658,13 @@ class PageGagnante extends StatelessWidget{
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: FittedBox(fit:BoxFit.cover, child: imageURL.startsWith("assets/")?Image.asset(imageURL):Image.file(File(imageURL))),
+              child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: imageURL.startsWith("assets/")
+                      ? Image.asset(imageURL)
+                      : Image.file(File(imageURL))),
             ),
+            Text("Temps écoulé : $tempsEcouleStringWin"),
             Text("Nombre de pas effectués : $pas")
           ],
         ),
