@@ -15,7 +15,7 @@ class Ex7m extends StatelessWidget {
     return const MyHomePage();
   }
 
-  String getExerciceName(){
+  String getExerciceName() {
     return nomExercice;
   }
 }
@@ -37,7 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int maxGridSize = 10;
   int _currentSliderValueGridCount = 3;
   double minDiffMixage = 1.0;
-  double maxDiffMixage = 6.9077552789821370520539743640530926228033044658863189280999837029;
+  double maxDiffMixage =
+      6.9077552789821370520539743640530926228033044658863189280999837029;
   double _currentSliderValueDiffMix = 3;
   int difficulteMixage = 28;
   int pas = 0;
@@ -53,11 +54,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
-    Timer.periodic(const Duration(milliseconds: 1), (timer) {{
-      tempsEcoule = stopwatch.elapsedMicroseconds.toDouble();
-      setState(() {
-        tempsEcouleString = "${tempsEcoule~/3600}:${tempsEcoule~/60}:$tempsEcoule";
-      });}});
+    Timer.periodic(const Duration(milliseconds: 1), (timer) {
+      {
+        tempsEcoule = stopwatch.elapsedMicroseconds.toDouble();
+        setState(() {
+          tempsEcouleString =
+              "${tempsEcoule ~/ 3600}:${tempsEcoule ~/ 60}:$tempsEcoule";
+        });
+      }
+    });
     regenerateTiles();
   }
 
@@ -98,42 +103,70 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: const Text('Nouvelle Partie'),
           ),
-          Slider(
-            divisions: maxGridSize-minGridSize,
-            value: _currentSliderValueGridCount.toDouble(),
-            min: minGridSize.toDouble(),
-            max: maxGridSize.toDouble(),
-            onChanged: (double value) {
-              setState(() {
-                if (_currentSliderValueGridCount != value.toInt()){
-                  _currentSliderValueGridCount = value.toInt();
-                  regenerateTiles();
-                }
-              });
-            },
-            label: "${_currentSliderValueGridCount.toInt()}",
+          Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+                child: Image(
+                  height: 30,
+                  image: AssetImage('assets/quality/grille_taille.png'),
+                ),
+              ),
+              Expanded(
+                child: Slider(
+                  divisions: maxGridSize - minGridSize,
+                  value: _currentSliderValueGridCount.toDouble(),
+                  min: minGridSize.toDouble(),
+                  max: maxGridSize.toDouble(),
+                  onChanged: (double value) {
+                    setState(() {
+                      if (_currentSliderValueGridCount != value.toInt()) {
+                        _currentSliderValueGridCount = value.toInt();
+                        regenerateTiles();
+                      }
+                    });
+                  },
+                  label: "${_currentSliderValueGridCount.toInt()}",
+                ),
+              )
+            ],
           ),
-          Slider(
-            divisions: 5,
-            value: _currentSliderValueDiffMix.toDouble(),
-            min: minDiffMixage,
-            max: maxDiffMixage,
-            onChanged: (double value) {
-              setState(() {
-                if (_currentSliderValueDiffMix != value.toInt()){
-                  _currentSliderValueDiffMix = value;
-                  difficulteMixage = exp(value).toInt();
-                  regenerateTiles();
-                }
-              });
-            },
-            label: "$difficulteMixage",
+          Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.fromLTRB(25, 0, 0, 0),
+                child: Image(
+                  height: 30,
+                  image: AssetImage('assets/quality/dices.png'),
+                ),
+              ),
+              Expanded(
+                child: Slider(
+                  divisions: 5,
+                  value: _currentSliderValueDiffMix.toDouble(),
+                  min: minDiffMixage,
+                  max: maxDiffMixage,
+                  onChanged: (double value) {
+                    setState(() {
+                      if (_currentSliderValueDiffMix != value.toInt()) {
+                        _currentSliderValueDiffMix = value;
+                        difficulteMixage = exp(value).toInt();
+                        regenerateTiles();
+                      }
+                    });
+                  },
+                  label: "$difficulteMixage",
+                ),
+              ),
+            ],
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SelectImagePage(updateImageUrl: updateImageUrl)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        SelectImagePage(updateImageUrl: updateImageUrl)),
               );
             },
             child: const Text('Choisir une image'),
@@ -161,10 +194,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  bool partieGagnee(){
+  bool partieGagnee() {
     if (listTiles[0].indexPosFinale != 0) return false;
-    for(int i = 1; i< listTiles.length; i++) {
-      if(listTiles[i].indexPosFinale-listTiles[i-1].indexPosFinale != 1) return false;
+    for (int i = 1; i < listTiles.length; i++) {
+      if (listTiles[i].indexPosFinale - listTiles[i - 1].indexPosFinale != 1)
+        return false;
     }
     int pasWin = pas;
     String tempsEcouleStringWin = tempsEcouleString;
@@ -174,13 +208,14 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => PageGagnante(pasWin, tempsEcouleStringWin, imageURLWin)),
+          builder: (context) =>
+              PageGagnante(pasWin, tempsEcouleStringWin, imageURLWin)),
     );
     return true;
   }
 
-  void annulerDernierCoup(){
-    if(listeCoups.isNotEmpty && annulerRestant > 0){
+  void annulerDernierCoup() {
+    if (listeCoups.isNotEmpty && annulerRestant > 0) {
       swapTiles(listeCoups.values.last, listeCoups.keys.last);
       listeCoups.remove(listeCoups.keys.last);
       listeCoups.remove(listeCoups.keys.last);
@@ -191,48 +226,58 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  bool trySwap(index){
-    if (index < 0){
+  bool trySwap(index) {
+    if (index < 0) {
       return false;
     }
-    if (index > _currentSliderValueGridCount*_currentSliderValueGridCount-1){
+    if (index >
+        _currentSliderValueGridCount * _currentSliderValueGridCount - 1) {
       return false;
     }
     bool succeed = false;
-    if(index-1 >= 0 && listTiles[index-1].isEmpty){
-      if(index%_currentSliderValueGridCount != 0){
+    if (index - 1 >= 0 && listTiles[index - 1].isEmpty) {
+      if (index % _currentSliderValueGridCount != 0) {
         succeed = true;
-        swapTiles(index-1, index);
+        swapTiles(index - 1, index);
       }
-    }else if(index+1 <= _currentSliderValueGridCount*_currentSliderValueGridCount-1 && listTiles[index+1].isEmpty){
-      if((index+1)%_currentSliderValueGridCount != 0){
+    } else if (index + 1 <=
+            _currentSliderValueGridCount * _currentSliderValueGridCount - 1 &&
+        listTiles[index + 1].isEmpty) {
+      if ((index + 1) % _currentSliderValueGridCount != 0) {
         succeed = true;
-        swapTiles(index+1, index);
+        swapTiles(index + 1, index);
       }
-    }else if(index-_currentSliderValueGridCount >= 0 && listTiles[index-_currentSliderValueGridCount].isEmpty){
+    } else if (index - _currentSliderValueGridCount >= 0 &&
+        listTiles[index - _currentSliderValueGridCount].isEmpty) {
       succeed = true;
-      swapTiles(index-_currentSliderValueGridCount, index);
-    }else if(index+_currentSliderValueGridCount <= _currentSliderValueGridCount*_currentSliderValueGridCount-1 && listTiles[index+_currentSliderValueGridCount].isEmpty){
+      swapTiles(index - _currentSliderValueGridCount, index);
+    } else if (index + _currentSliderValueGridCount <=
+            _currentSliderValueGridCount * _currentSliderValueGridCount - 1 &&
+        listTiles[index + _currentSliderValueGridCount].isEmpty) {
       succeed = true;
-      swapTiles(index+_currentSliderValueGridCount, index);
+      swapTiles(index + _currentSliderValueGridCount, index);
     }
     return succeed;
   }
 
   void regenerateTiles() {
-    int idTileVide = (idTileVideOverride == -1)?Random().nextInt(_currentSliderValueGridCount*_currentSliderValueGridCount) : idTileVideOverride;
+    int idTileVide = (idTileVideOverride == -1)
+        ? Random().nextInt(
+            _currentSliderValueGridCount * _currentSliderValueGridCount)
+        : idTileVideOverride;
     setState(() {
       // creer des tiles
-      listTiles = List<Tile>.generate(_currentSliderValueGridCount * _currentSliderValueGridCount, (index) {
+      listTiles = List<Tile>.generate(
+          _currentSliderValueGridCount * _currentSliderValueGridCount, (index) {
         if (index == idTileVide) {
           return Tile(index, true, index, imageURL, calculateAlignment(index));
         } else {
           return Tile(index, false, index, imageURL, calculateAlignment(index));
         }
       });
-      
+
       bool dejaRange = true;
-      while(dejaRange){
+      while (dejaRange) {
         // mixer les tiles
         shuffleTiles(idTileVide);
 
@@ -240,10 +285,15 @@ class _MyHomePageState extends State<MyHomePage> {
         for (int i = 0; i < listTiles.length; i++) {
           listTiles[i].indexTile = i;
         }
-        
-        if (listTiles[0].indexPosFinale != 0){dejaRange = false;}
-        for(int i = 1; i< listTiles.length; i++) {
-          if(listTiles[i].indexPosFinale-listTiles[i-1].indexPosFinale != 1){dejaRange = false;}
+
+        if (listTiles[0].indexPosFinale != 0) {
+          dejaRange = false;
+        }
+        for (int i = 1; i < listTiles.length; i++) {
+          if (listTiles[i].indexPosFinale - listTiles[i - 1].indexPosFinale !=
+              1) {
+            dejaRange = false;
+          }
         }
       }
       pas = 0;
@@ -254,8 +304,8 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void shuffleTiles(int idTileVide){
-    for(int i = 0; i < difficulteMixage; i++) {
+  void shuffleTiles(int idTileVide) {
+    for (int i = 0; i < difficulteMixage; i++) {
       int direction;
       bool shuffled = false;
       int offset;
@@ -280,8 +330,10 @@ class _MyHomePageState extends State<MyHomePage> {
             print("Erreur: le générateur de nombres aléatoires est cassé");
         }
         shuffled = trySwap(idTileVide + offset);
-        for(int j = 0; j< _currentSliderValueGridCount*_currentSliderValueGridCount; j++){
-          if(listTiles[j].isEmpty){
+        for (int j = 0;
+            j < _currentSliderValueGridCount * _currentSliderValueGridCount;
+            j++) {
+          if (listTiles[j].isEmpty) {
             idTileVide = j;
             break;
           }
@@ -291,11 +343,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Alignment calculateAlignment(int index) {
-    int row = index ~/ _currentSliderValueGridCount; 
-    int column = index % _currentSliderValueGridCount; 
+    int row = index ~/ _currentSliderValueGridCount;
+    int column = index % _currentSliderValueGridCount;
 
-    double horizontalAlignment = (column / (_currentSliderValueGridCount - 1)) * 2 - 1; 
-    double verticalAlignment = (row / (_currentSliderValueGridCount - 1)) * 2 - 1; 
+    double horizontalAlignment =
+        (column / (_currentSliderValueGridCount - 1)) * 2 - 1;
+    double verticalAlignment =
+        (row / (_currentSliderValueGridCount - 1)) * 2 - 1;
     return Alignment(horizontalAlignment, verticalAlignment);
   }
 
@@ -306,13 +360,13 @@ class _MyHomePageState extends State<MyHomePage> {
       Tile tileEmpty = listTiles[indexEmpty];
       Tile tileToChange = listTiles[indexAChanger];
 
-      if(indexEmpty > indexAChanger){
+      if (indexEmpty > indexAChanger) {
         listTiles.insert(indexEmpty, tileToChange);
         listTiles.remove(tileEmpty);
 
         listTiles.insert(indexAChanger, tileEmpty);
         listTiles.remove(tileToChange);
-      }else{
+      } else {
         listTiles.insert(indexAChanger, tileEmpty);
         listTiles.remove(tileToChange);
 
@@ -326,7 +380,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class Tile{
+class Tile {
   late String imageURL;
   late Alignment alignment;
   late int indexTile;
@@ -334,12 +388,14 @@ class Tile{
   late Color color;
   bool isEmpty = false;
 
-  Tile(this.indexTile, this.isEmpty, this.indexPosFinale, this.imageURL, this.alignment) {
-    color = Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255), Random().nextInt(255));
+  Tile(this.indexTile, this.isEmpty, this.indexPosFinale, this.imageURL,
+      this.alignment) {
+    color = Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255),
+        Random().nextInt(255));
   }
 
   Widget toWidget(double taille) {
-    if (imageURL.startsWith("assets/")){
+    if (imageURL.startsWith("assets/")) {
       if (!isEmpty) {
         return FittedBox(
           fit: BoxFit.fill,
@@ -348,14 +404,19 @@ class Tile{
               alignment: alignment,
               widthFactor: taille,
               heightFactor: taille,
-              child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.asset(imageURL))),
+              child: SizedBox(
+                  width: taille,
+                  height: taille,
+                  child: FittedBox(
+                      fit: BoxFit.cover, child: Image.asset(imageURL))),
             ),
           ),
         );
       } else {
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(color: const Color.fromARGB(255, 150, 131, 236), width: 5.0),
+            border: Border.all(
+                color: const Color.fromARGB(255, 150, 131, 236), width: 5.0),
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: FittedBox(
@@ -367,11 +428,16 @@ class Tile{
                   alignment: alignment,
                   widthFactor: taille,
                   heightFactor: taille,
-                  child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.asset(
-                    imageURL,
-                    color: const Color.fromARGB(255, 150, 131, 236),
-                    colorBlendMode: BlendMode.overlay,
-                  ))),
+                  child: SizedBox(
+                      width: taille,
+                      height: taille,
+                      child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: Image.asset(
+                            imageURL,
+                            color: const Color.fromARGB(255, 150, 131, 236),
+                            colorBlendMode: BlendMode.overlay,
+                          ))),
                 ),
               ),
             ),
@@ -387,14 +453,19 @@ class Tile{
               alignment: alignment,
               widthFactor: taille,
               heightFactor: taille,
-              child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.file(File(imageURL)))),
+              child: SizedBox(
+                  width: taille,
+                  height: taille,
+                  child: FittedBox(
+                      fit: BoxFit.cover, child: Image.file(File(imageURL)))),
             ),
           ),
         );
       } else {
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(color: const Color.fromARGB(255, 150, 131, 236), width: 5.0),
+            border: Border.all(
+                color: const Color.fromARGB(255, 150, 131, 236), width: 5.0),
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: FittedBox(
@@ -406,11 +477,16 @@ class Tile{
                   alignment: alignment,
                   widthFactor: taille,
                   heightFactor: taille,
-                  child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.file(
-                    File(imageURL),
-                    color: const Color.fromARGB(255, 150, 131, 236),
-                    colorBlendMode: BlendMode.overlay,
-                  ))),
+                  child: SizedBox(
+                      width: taille,
+                      height: taille,
+                      child: FittedBox(
+                          fit: BoxFit.cover,
+                          child: Image.file(
+                            File(imageURL),
+                            color: const Color.fromARGB(255, 150, 131, 236),
+                            colorBlendMode: BlendMode.overlay,
+                          ))),
                 ),
               ),
             ),
@@ -510,16 +586,16 @@ class _FileScreenState extends State<FileScreen> {
 
     if (result != null) {
       File file = File(result.files.single.path!);
-      if (file.path.endsWith(".jpeg") || 
-          file.path.endsWith(".jpg") || 
-          file.path.endsWith(".png") || 
-          file.path.endsWith(".gif") || 
-          file.path.endsWith(".bmp") || 
-          file.path.endsWith(".tiff") || 
-          file.path.endsWith(".tif") || 
-          file.path.endsWith(".svg") || 
-          file.path.endsWith(".webp") || 
-          file.path.endsWith(".heic") || 
+      if (file.path.endsWith(".jpeg") ||
+          file.path.endsWith(".jpg") ||
+          file.path.endsWith(".png") ||
+          file.path.endsWith(".gif") ||
+          file.path.endsWith(".bmp") ||
+          file.path.endsWith(".tiff") ||
+          file.path.endsWith(".tif") ||
+          file.path.endsWith(".svg") ||
+          file.path.endsWith(".webp") ||
+          file.path.endsWith(".heic") ||
           file.path.endsWith(".heif")) {
         setState(() {
           _imagePath = file.path;
@@ -547,7 +623,8 @@ class _FileScreenState extends State<FileScreen> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("Portez attention au type de fichier !", style: TextStyle(color: couleurTexteInfo)),
+              child: Text("Portez attention au type de fichier !",
+                  style: TextStyle(color: couleurTexteInfo)),
             ),
             ElevatedButton(
               onPressed: _getImageFromGallery,
@@ -568,7 +645,7 @@ class SelectImagePage extends StatelessWidget {
     "assets/images/hotel.png",
     "assets/images/montagnes.jpg",
     "assets/images/nature.jpg",
-    "assets/images/wallebra.png", 
+    "assets/images/wallebra.png",
     "assets/images/wallespace.jpg",
     "assets/images/rainbow.jpg",
     "assets/images/camera.png",
@@ -617,7 +694,9 @@ class SelectImagePage extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FileScreen(updateImageUrl: updateImageUrl)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        FileScreen(updateImageUrl: updateImageUrl)),
               );
             },
             child: const Text('Depuis les fichiers'),
@@ -627,7 +706,9 @@ class SelectImagePage extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CameraScreen(updateImageUrl: updateImageUrl)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        CameraScreen(updateImageUrl: updateImageUrl)),
               );
             },
             child: const Text('Prendre une photo'),
@@ -638,13 +719,13 @@ class SelectImagePage extends StatelessWidget {
   }
 }
 
-
 class PageGagnante extends StatelessWidget {
   final String imageURL;
   final String tempsEcouleStringWin;
   final int pas;
 
-  const PageGagnante(this.pas, this.tempsEcouleStringWin, this.imageURL, {super.key});
+  const PageGagnante(this.pas, this.tempsEcouleStringWin, this.imageURL,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
