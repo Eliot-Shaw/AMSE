@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
         tempsEcoule = stopwatch.elapsedMicroseconds.toDouble();
         setState(() {
           tempsEcouleString =
-              "${tempsEcoule ~/ 3600}:${tempsEcoule ~/ 60}:$tempsEcoule";
+              "${(tempsEcoule / 1000000) ~/ 3600}:${(tempsEcoule / 1000000) ~/ 60}:${(tempsEcoule / 1000000).round()}";
         });
       }
     });
