@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
 
-class Ex7l extends StatelessWidget {
+class Ex7m extends StatelessWidget {
   static const String nomExercice = "Ajout d'assets pour quality";
 
-  const Ex7l({super.key});
+  const Ex7m({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Ex7l.nomExercice),
+        title: const Text(Ex7m.nomExercice),
         backgroundColor: const Color.fromARGB(255, 150, 131, 236),
       ),
       body: Column(
