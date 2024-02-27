@@ -13,7 +13,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define PATH2_EXECUTABLE     "../bin/pong"      /* ->image executable a demarrer      */
+#define PATH2_EXECUTABLE     "./bin/pong"      /* ->image executable a demarrer      */
 #define MAX_ITER              10                /* ->nombre d'iterations de l'echange */
 #define SLEEP_TIME            500000            /* ->duree d'attente                  */
 /*.........*/
@@ -43,17 +43,15 @@ void SignalHandler( int signal )
 /*&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
 pid_t   CreateProcess(  char *szPath2Executable,        /* ->chemin vers l'executable  */
                         char **szArgv,                  /* ->arguments                 */
-                        char **szEnvp               )   /* ->variables d'environnement */
-{
+                        char **szEnvp){                 /* ->variables d'environnement */
     pid_t   pChild;                 /* ->PID du processus fils */
     /*.......*/
     /* check */
     /*.......*/
-    if(szPath2Executable == NULL)
-    {
+    if(szPath2Executable == NULL){
         fprintf(stderr,"ERREUR : CreateProcess() ---> pointeur NULL passe en argument.\n");
         return( -1 );
-    };
+    }
     /*..........................................*/
     /* tentative de lancement du processus fils */
     /*..........................................*/
