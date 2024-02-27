@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, library_private_types_in_public_api
+
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
@@ -7,11 +9,11 @@ import 'package:camera/camera.dart';
 class Ex7h extends StatelessWidget {
   static const String nomExercice = "Prendre une photo";
 
-  const Ex7h({Key? key});
+  const Ex7h({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MyHomePage();
+    return const MyHomePage();
   }
 
   String getExerciceName(){
@@ -20,7 +22,7 @@ class Ex7h extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key});
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -99,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
               setState(() {
                 if (_currentSliderValueDiffMix != value.toInt()){
                   _currentSliderValueDiffMix = value;
-                  difficulteMixage = value.toInt();
+                  difficulteMixage = exp(value).toInt();
                   regenerateTiles();
                 }
               });
@@ -144,10 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool trySwap(index){
     if (index < 0){
       return false;
-    };
+    }
     if (index > _currentSliderValueGridCount*_currentSliderValueGridCount-1){
       return false;
-    };
+    }
     bool succeed = false;
     if(index-1 >= 0 && listTiles[index-1].isEmpty){
       if(index%_currentSliderValueGridCount != 0){
@@ -287,7 +289,7 @@ class Tile {
               alignment: alignment,
               widthFactor: taille,
               heightFactor: taille,
-              child: Image.asset(imageURL),
+              child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.asset(imageURL))),
             ),
           ),
         );
@@ -306,12 +308,12 @@ class Tile {
                   alignment: alignment,
                   widthFactor: taille,
                   heightFactor: taille,
-                  child: Image.asset(
+                  child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.asset(
                     imageURL,
                     color: const Color.fromARGB(255, 150, 131, 236),
-                    colorBlendMode: BlendMode.clear,
+                    colorBlendMode: BlendMode.overlay,
                     // colorBlendMode: BlendMode.overlay,
-                  ),
+                  ))),
                 ),
               ),
             ),
@@ -321,13 +323,13 @@ class Tile {
     } else {
       if (!isEmpty) {
         return FittedBox(
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
           child: ClipRect(
             child: Align(
               alignment: alignment,
               widthFactor: taille,
               heightFactor: taille,
-              child: Image.file(File(imageURL)),
+              child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.file(File(imageURL)))),
             ),
           ),
         );
@@ -338,7 +340,7 @@ class Tile {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: FittedBox(
-            fit: BoxFit.fill,
+            fit: BoxFit.cover,
             child: Opacity(
               opacity: 0.3,
               child: ClipRect(
@@ -346,11 +348,11 @@ class Tile {
                   alignment: alignment,
                   widthFactor: taille,
                   heightFactor: taille,
-                  child: Image.file(
+                  child: SizedBox(width: taille, height: taille, child: FittedBox(fit:BoxFit.cover ,child: Image.file(
                     File(imageURL),
                     color: const Color.fromARGB(255, 150, 131, 236),
                     colorBlendMode: BlendMode.overlay,
-                  ),
+                  ))),
                 ),
               ),
             ),
@@ -364,7 +366,7 @@ class Tile {
 class CameraScreen extends StatefulWidget {
   final Function(String) updateImageUrl;
 
-  const CameraScreen({Key? key, required this.updateImageUrl}) : super(key: key);
+  const CameraScreen({super.key, required this.updateImageUrl});
 
   @override
   _CameraScreenState createState() => _CameraScreenState();
@@ -412,6 +414,7 @@ class _CameraScreenState extends State<CameraScreen> {
             final image = await _controller.takePicture();
             widget.updateImageUrl(image.path);
             print(image.path);
+            // ignore: use_build_context_synchronously
             Navigator.pop(context);
           } catch (e) {
             print(e);

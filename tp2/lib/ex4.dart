@@ -16,16 +16,14 @@ class Tile {
     return FittedBox(
       fit: BoxFit.fill,
       child: ClipRect(
-        child: Container(
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Image.network(
-              imageURL,
-              width: tailleTile,
-              height: tailleTile,
-              fit: BoxFit.fill,
-              alignment: Alignment(-startX / tailleTile, -startY / tailleTile),
-            ),
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: Image.network(
+            imageURL,
+            width: tailleTile,
+            height: tailleTile,
+            fit: BoxFit.fill,
+            alignment: Alignment(-startX / tailleTile, -startY / tailleTile),
           ),
         ),
       ),
@@ -35,7 +33,7 @@ class Tile {
 class Ex4 extends StatelessWidget {
   static const String nomExercice = "Affichage d'une tuile";
 
-  const Ex4({Key? key}) : super(key: key);
+  const Ex4({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +73,7 @@ class MyHomePage extends StatelessWidget {
                 child: InkWell(
                   child: tile.croppedImageTile(0),
                   onTap: () {
+                    // ignore: avoid_print
                     print("Tapped on tile");
                   },
                 ),

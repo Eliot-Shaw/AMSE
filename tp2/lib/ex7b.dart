@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -52,7 +54,7 @@ class Tile {
 class Ex7b extends StatelessWidget {
   static const String nomExercice = "Jeu de taquin avec une image presque comlpete";
 
-  const Ex7b({Key? key});
+  const Ex7b({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class Ex7b extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key});
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
