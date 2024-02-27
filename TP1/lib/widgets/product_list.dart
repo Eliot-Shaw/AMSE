@@ -71,33 +71,31 @@ class _ProductListState extends State<ProductList> {
   return SafeArea(
     child: Column(
       children: [
-        Container(
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 5, 0),
-                child: Text(
-                  'Jeu\nJoue',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 5, 0),
+              child: Text(
+                'Jeu\nJoue',
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-              Expanded(
-                child: TextField(
-                  controller: _searchController,
-                  onChanged: (value) {
-                    filterProducts(selectedFilter, value);
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Search',
-                    prefixIcon: Icon(Icons.search),
-                    border: border,
-                    enabledBorder: border,
-                    focusedBorder: border,
-                  ),
-                ),
-              ),
-              ],
             ),
+            Expanded(
+              child: TextField(
+                controller: _searchController,
+                onChanged: (value) {
+                  filterProducts(selectedFilter, value);
+                },
+                decoration: const InputDecoration(
+                  hintText: 'Search',
+                  prefixIcon: Icon(Icons.search),
+                  border: border,
+                  enabledBorder: border,
+                  focusedBorder: border,
+                ),
+              ),
+            ),
+            ],
           ),
           SizedBox(
             height: 60,

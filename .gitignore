@@ -2,5 +2,9 @@
 **/.dart_tool
 **/.vscode
 **/pubspec.lock
+**/generated_plugin*
+**/Flutter/GeneratedPluginRegistrant.swift
+**/flutter/generated_plugin_registrant.cc
+**/pubspec.lock
 
 /app_ideas/shop_app

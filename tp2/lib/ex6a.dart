@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+import 'dart:math';
 
-math.Random random = new math.Random();
 
 class Tile {
   Color color = const Color.fromARGB(255, 150, 131, 236);
 
   Tile(this.color);
   Tile.randomColor() {
-    color = Color.fromARGB(255, random.nextInt(255), random.nextInt(255), random.nextInt(255)); // Couleur full rando
+    color = Color.fromARGB(255, Random().nextInt(255), Random().nextInt(255), Random().nextInt(255)); // Couleur full rando
   }
 }
 
 class TileWidget extends StatelessWidget {
   final Tile tile;
 
-  const TileWidget(this.tile);
+  const TileWidget(this.tile, {super.key});
 
   @override
   Widget build(BuildContext context) {
