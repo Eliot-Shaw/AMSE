@@ -22,7 +22,7 @@ double K,
     T,
     z0,
     a0,
-    yk_,
+    yk,
     u0 = 1.0; /* ->secondes                            */
 int GoOn = 1,
     simDuration; /* ->controle d'execution                */
@@ -42,12 +42,16 @@ void usage(char *pgm_name)
     {
         exit(-1);
     };
-    printf("%s <hh> <mm> <simDuration>\n", pgm_name);
-    printf("declenche un compte a rebours qui va decompte de <hh> <mm> <simDuration>\n");
-    printf("jusque 0 en affichant les secondes.\n");
-    printf("exemple : \n");
-    printf("%s 12 23 57\n", pgm_name);
+    printf("%s <K> <tau> <Te> <T> <simDuration>\n", pgm_name);
+    printf("calcule un système de 1er ordre en temps réel\n");
+    printf("pendant une durée simDuration en secondes.\n");
 }
+
+double ynext(double yprec, double uk)
+{
+    return yprec * z0 + a0 * uk;
+}
+
 /*&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
 /* gestionnaire de l'alarme cyclique */
 /*&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
@@ -55,18 +59,15 @@ void cycl_alm_handler(int signal)
 {
     simDuration--;
     printf("temps restant: %02d\n", simDuration);
-    yk_ = yk(yk_, u0);
-    printf("y(k) = %d\n", yk_) if (simDuration == 0)
+    yk = ynext(yk, u0);
+    printf("y(k) = %lf\n", yk); 
+    if (simDuration == 0)
     {
         printf("TERMINE !!! \n");
         GoOn = 0; /* declenche la sortie de programme */
     };
 }
 
-double yk(double yprec, double uk)
-{
-    return yprec * z0 + a0 * uk;
-}
 /*#####################*/
 /* programme principal */
 /*#####################*/
@@ -83,10 +84,10 @@ int main(int argc, char *argv[])
         return (0);
     };
     /* recuperation des arguments */
-    if ((sscanf(argv[1], "%d", &K) == 0) ||
-        (sscanf(argv[2], "%d", &tau) == 0) ||
-        (sscanf(argv[3], "%d", &Te) == 0) ||
-        (sscanf(argv[4], "%d", &T) == 0) ||
+    if ((sscanf(argv[1], "%lf", &K) == 0) ||
+        (sscanf(argv[2], "%lf", &tau) == 0) ||
+        (sscanf(argv[3], "%lf", &Te) == 0) ||
+        (sscanf(argv[4], "%lf", &T) == 0) ||
         (sscanf(argv[5], "%d", &simDuration) == 0))
     {
         printf("ERREUR : probleme de format des arguments\n");
@@ -96,7 +97,7 @@ int main(int argc, char *argv[])
     };
     z0 = exp(-Te / tau);
     a0 = K * (1 - z0);
-    yk_ = 0;
+    yk = 0;
     /* initialisation */
     sigemptyset(&blocked);
     memset(&sa, 0, sizeof(sigaction)); /* ->precaution utile... */
@@ -106,10 +107,11 @@ int main(int argc, char *argv[])
     /* installation du gestionnaire de signal */
     sigaction(SIGALRM, &sa, NULL);
     /* initialisation de l'alarme  */
-    period.it_interval.tv_sec = 1;
-    period.it_interval.tv_usec = 0;
-    period.it_value.tv_sec = 1;
-    period.it_value.tv_usec = 0;
+    printf("%lf",Te);
+    period.it_interval.tv_sec = (int)Te;
+    period.it_interval.tv_usec = (int)((Te- (int)Te))*1e6;
+    period.it_value.tv_sec = (int)Te;
+    period.it_value.tv_usec = (int)((Te- (int)Te))*1e6;
     /* demarrage de l'alarme */
     setitimer(ITIMER_REAL, &period, NULL);
     /* on ne fait desormais plus rien d'autre que */
