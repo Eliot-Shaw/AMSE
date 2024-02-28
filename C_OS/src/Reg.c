@@ -36,13 +36,16 @@ void usage(char *pgm_name)
     {
         exit(-1);
     };
-    printf("%s <coefK>\n", pgm_name);
+    printf("%s <coefK> <Te>\n", pgm_name);
     printf("modifie le coefK du debit entrant\n");
     printf("<coefK> : coefficient de proportionnalité de la réponse\n");
     printf("\n");
+    printf("modifie le Te temps echantillonage\n");
+    printf("<Te> : le temps echantillonage\n");
+    printf("\n");
     printf("exemple : \n");
-    printf("%s 5\n", pgm_name);
-    printf("impose 5 comme nouveau coefK pour la boucle fermée\n");
+    printf("%s 5 0.01\n", pgm_name);
+    printf("impose 5 comme nouveau coefK pour la boucle fermée et 0.01 le temps d'echantillonage\n");
 }
 /*&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
 /* gestionnaire de l'alarme cyclique */
@@ -84,6 +87,7 @@ int main(int argc, char *argv[])
     void *shm_ptr_niveau;   // Pointeur vers la mémoire partagée
 
     double coefK;            /* ->coefK a ecrire dans la zone  */
+    double Te;            /* ->coefK a ecrire dans la zone  */
     struct sigaction sa,     /* ->configuration de la gestion de l'alarme */
         sa_old;              /* ->ancienne config de gestion d'alarme     */
     sigset_t blocked;        /* ->liste des signaux bloques               */
@@ -95,7 +99,7 @@ int main(int argc, char *argv[])
         return (0);
     };
     /* recuperation des arguments */
-    if (sscanf(argv[1], "%lf", &coefK) == 0)
+    if((sscanf(argv[1], "%lf", &coefK) == 0) || (sscanf(argv[2], "%lf", &Te) == 0))
     {
         printf("ERREUR : probleme de format des arguments\n");
         printf("         passe en ligne de commande.\n");
