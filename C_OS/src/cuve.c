@@ -213,6 +213,7 @@ int main( int argc, char *argv[])
   close(fd_volume);
   close(fd_stopcuve);
   /* fini */
+  printf("valeur d'arret passé à %d\n", *stopcuve);
   printf("FIN.\n");
   return( 0 );  /* ->on n'arrive pas jusque la en pratique */
 }
