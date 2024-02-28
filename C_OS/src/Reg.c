@@ -199,5 +199,10 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+    //Menage
+    close(shm_fd_consigne);
+    close(shm_fd_debit);
+    close(shm_fd_niveau);
+    printf("FIN.\n");
     return 0;
 }
