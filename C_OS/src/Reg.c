@@ -54,8 +54,7 @@ void cycl_alm_handler(int signal)
     /*...............................*/
     if (signal == SIGALRM)
     {
-        (*v) += Te * (*qe);
-        (*y) = (*v) / s;
+        (*shm_ptr_debit) = coefK * ((*shm_ptr_consigne) - (*shm_ptr_niveau));
     };
     /*................................*/
     /* arret du processus a reception */
@@ -76,13 +75,13 @@ int main(int argc, char *argv[])
     const char *shm_niveau = NIVEAU;     // Nom de l'objet de mémoire partagée
     const int shm_size = sizeof(double); // Taille de l'objet de mémoire partagée en octets
 
-    int shm_fd_consigne;    // Descripteur de fichier pour la mémoire partagée
-    int shm_fd_debit;       // Descripteur de fichier pour la mémoire partagée
-    int shm_fd_niveau;      // Descripteur de fichier pour la mémoire partagée
-    void *shm_ptr_consigne; // Pointeur vers la mémoire partagée
-    void *shm_ptr_debit;    // Pointeur vers la mémoire partagée
-    void *shm_ptr_niveau;   // Pointeur vers la mémoire partagée
-    
+    int shm_fd_consigne;      // Descripteur de fichier pour la mémoire partagée
+    int shm_fd_debit;         // Descripteur de fichier pour la mémoire partagée
+    int shm_fd_niveau;        // Descripteur de fichier pour la mémoire partagée
+    double *shm_ptr_consigne; // Pointeur vers la mémoire partagée
+    double *shm_ptr_debit;    // Pointeur vers la mémoire partagée
+    double *shm_ptr_niveau;   // Pointeur vers la mémoire partagée
+
     double coefK;            /* ->coefK a ecrire dans la zone  */
     struct sigaction sa,     /* ->configuration de la gestion de l'alarme */
         sa_old;              /* ->ancienne config de gestion d'alarme     */
@@ -102,10 +101,10 @@ int main(int argc, char *argv[])
         usage(argv[0]);
         return (0);
     };
+
     /*................*/
     /* initialisation */
     /*................*/
-    
 
     // Ouverture de l'objet de mémoire partagée
     shm_fd_consigne = shm_open(shm_consigne, O_RDWR, S_IRUSR | S_IWUSR);
@@ -130,9 +129,9 @@ int main(int argc, char *argv[])
     }
 
     // Mappage de la mémoire partagée dans l'espace d'adressage du processus
-    shm_ptr_consigne = mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_consigne, 0);
-    shm_ptr_debit = mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_debit, 0);
-    shm_ptr_niveau = mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_niveau, 0);
+    shm_ptr_consigne = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_consigne, 0);
+    shm_ptr_debit = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_debit, 0);
+    shm_ptr_niveau = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_niveau, 0);
     if (shm_ptr_consigne == MAP_FAILED)
     {
         perror("Erreur lors du mappage de la mémoire partagée");
