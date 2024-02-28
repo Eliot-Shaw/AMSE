@@ -22,6 +22,10 @@
 #define DEBIT "DEBIT"
 #define CONSIGNE "CONSIGNE"
 #define NIVEAU "NIVEAU"
+/*....................*/
+/* variables globales */
+/*....................*/
+int GoOn = 1; /* ->controle d'execution               */
 /*...................*/
 /* prototypes locaux */
 /*...................*/
@@ -159,16 +163,6 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    // Affichage du contenu de la mémoire partagée
-    printf("Contenu de la mémoire partagée : %s\n", (double *)shm_ptr_consigne);
-    printf("Contenu de la mémoire partagée : %s\n", (double *)shm_ptr_niveau);
-
-    // Modification du contenu de la mémoire partagée
-    *shm_ptr_debit = 80.0; // j'ai ounblié
-
-    // Affichage du contenu modifié de la mémoire partagée
-    printf("Contenu modifié de la mémoire partagée : %s\n", (char *)shm_debit);
-
     // Gestion de l'alarme
     sigemptyset(&blocked);
     memset(&sa, 0, sizeof(sigaction)); /* ->precaution utile... */
@@ -190,7 +184,7 @@ int main(int argc, char *argv[])
     do
     {
         pause();
-        printf("qe = %lf\t v = %lf y = %lf\n", *qe, *v, *y);
+        printf("consigne = %lf\t niveau = %lf débit = %lf\n", *shm_ptr_consigne, *shm_ptr_niveau, *shm_ptr_debit);
     } while (GoOn == 1);
 
     // Libération de la mémoire partagée consigne
