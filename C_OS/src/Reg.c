@@ -71,9 +71,19 @@ void cycl_alm_handler(int signal)
 /*#####################*/
 int main(int argc, char *argv[])
 {
+    const char *shm_consigne = CONSIGNE; // Nom de l'objet de mémoire partagée
+    const char *shm_debit = DEBIT;       // Nom de l'objet de mémoire partagée
+    const char *shm_niveau = NIVEAU;     // Nom de l'objet de mémoire partagée
+    const int shm_size = sizeof(double); // Taille de l'objet de mémoire partagée en octets
+
+    int shm_fd_consigne;    // Descripteur de fichier pour la mémoire partagée
+    int shm_fd_debit;       // Descripteur de fichier pour la mémoire partagée
+    int shm_fd_niveau;      // Descripteur de fichier pour la mémoire partagée
+    void *shm_ptr_consigne; // Pointeur vers la mémoire partagée
+    void *shm_ptr_debit;    // Pointeur vers la mémoire partagée
+    void *shm_ptr_niveau;   // Pointeur vers la mémoire partagée
+    
     double coefK;            /* ->coefK a ecrire dans la zone  */
-    double *qe;              /* ->pointeur sur la zone partagee */
-    int fd;                  /* ->"file descriptor" sur la zone partagee */
     struct sigaction sa,     /* ->configuration de la gestion de l'alarme */
         sa_old;              /* ->ancienne config de gestion d'alarme     */
     sigset_t blocked;        /* ->liste des signaux bloques               */
@@ -95,17 +105,7 @@ int main(int argc, char *argv[])
     /*................*/
     /* initialisation */
     /*................*/
-    const char *shm_consigne = CONSIGNE; // Nom de l'objet de mémoire partagée
-    const char *shm_debit = DEBIT;       // Nom de l'objet de mémoire partagée
-    const char *shm_niveau = NIVEAU;     // Nom de l'objet de mémoire partagée
-    const int shm_size = sizeof(double); // Taille de l'objet de mémoire partagée en octets
-
-    int shm_fd_consigne;    // Descripteur de fichier pour la mémoire partagée
-    int shm_fd_debit;       // Descripteur de fichier pour la mémoire partagée
-    int shm_fd_niveau;      // Descripteur de fichier pour la mémoire partagée
-    void *shm_ptr_consigne; // Pointeur vers la mémoire partagée
-    void *shm_ptr_debit;    // Pointeur vers la mémoire partagée
-    void *shm_ptr_niveau;   // Pointeur vers la mémoire partagée
+    
 
     // Ouverture de l'objet de mémoire partagée
     shm_fd_consigne = shm_open(shm_consigne, O_RDWR, S_IRUSR | S_IWUSR);
