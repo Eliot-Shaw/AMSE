@@ -38,12 +38,12 @@ int main(int argc, char *argv[])
         return (-errno);
     };
     ftruncate(fh, sizeof(double));
-    yt = (double *)mmap(NULL,
-                        sizeof(double),
-                        PROT_READ | PROT_WRITE,
-                        MAP_SHARED,
-                        fh,
-                        0);
+    yt = (int *)mmap(NULL,
+                     sizeof(double),
+                     PROT_READ | PROT_WRITE,
+                     MAP_SHARED,
+                     fh,
+                     0);
     *yt = 1; /* ->ecriture effective dans la zone partagee */
     close(fh);
     return (0); /* ->on n'arrive pas jusque la en pratique */
