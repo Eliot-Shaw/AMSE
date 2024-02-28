@@ -147,6 +147,7 @@ int main( int argc, char *argv[])
                       MAP_SHARED, 
                       fd_stopcuve, 
                       0                         );
+  *stopcuve = 0;
   /*         --->VOLUME<---            */
   printf("zone VOLUME\n");
   fd_volume = shm_open(VOLUME, O_RDWR | O_CREAT, 0600);
@@ -197,9 +198,6 @@ int main( int argc, char *argv[])
   period.it_value.tv_usec    = (int)((Te - (int)(Te))*1e6);
   /* demarrage de l'alarme */
   setitimer( ITIMER_REAL, &period, NULL );
-
-  *stopcuve = 0;
-
   /* on ne fait desormais plus rien d'autre que */
   /* d'attendre les signaux                     */
   printf("SIMULATION :\n");
