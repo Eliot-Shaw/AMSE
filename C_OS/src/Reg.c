@@ -68,7 +68,70 @@ int main( int argc, char *argv[])
   /*................*/
   /* initialisation */
   /*................*/
-  
+  const char *shm_consigne = CONSIGNE; // Nom de l'objet de mémoire partagée
+  const char *shm_debit = DEBIT; // Nom de l'objet de mémoire partagée
+  const char *shm_niveau = NIVEAU; // Nom de l'objet de mémoire partagée
+  const int shm_size = sizeof(double); // Taille de l'objet de mémoire partagée en octets
+
+  int shm_fd_consigne; // Descripteur de fichier pour la mémoire partagée
+  int shm_fd_debit; // Descripteur de fichier pour la mémoire partagée
+  int shm_fd_niveau; // Descripteur de fichier pour la mémoire partagée
+  void *shm_ptr_consigne; // Pointeur vers la mémoire partagée
+  void *shm_ptr_debit; // Pointeur vers la mémoire partagée
+  void *shm_ptr_niveau; // Pointeur vers la mémoire partagée
+
+  // Ouverture de l'objet de mémoire partagée
+  shm_fd_consigne = shm_open(shm_consigne, O_RDWR, S_IRUSR | S_IWUSR);
+  if (shm_fd_consigne == -1) {
+      perror("Erreur lors de l'ouverture de l'objet de mémoire partagée");
+      exit(EXIT_FAILURE);
+  }
+  // Ouverture de l'objet de mémoire partagée
+  shm_fd_debit = shm_open(shm_debit, O_RDWR, S_IRUSR | S_IWUSR);
+  if (shm_fd_debit == -1) {
+      perror("Erreur lors de l'ouverture de l'objet de mémoire partagée");
+      exit(EXIT_FAILURE);
+  }
+  // Ouverture de l'objet de mémoire partagée
+  shm_fd_niveau = shm_open(shm_niveau, O_RDWR, S_IRUSR | S_IWUSR);
+  if (shm_fd_niveau == -1) {
+      perror("Erreur lors de l'ouverture de l'objet de mémoire partagée");
+      exit(EXIT_FAILURE);
+  }
+
+  // Mappage de la mémoire partagée dans l'espace d'adressage du processus
+  shm_ptr_consigne = mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_consigne, 0);
+  shm_ptr_debit = mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_debit, 0);
+  shm_ptr_niveau = mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_niveau, 0);
+  if (shm_ptr == MAP_FAILED) {
+      perror("Erreur lors du mappage de la mémoire partagée");
+      exit(EXIT_FAILURE);
+  }
+  if (shm_ptr == MAP_FAILED) {
+      perror("Erreur lors du mappage de la mémoire partagée");
+      exit(EXIT_FAILURE);
+  }
+  if (shm_ptr == MAP_FAILED) {
+      perror("Erreur lors du mappage de la mémoire partagée");
+      exit(EXIT_FAILURE);
+  }
+
+  // Affichage du contenu de la mémoire partagée
+  printf("Contenu de la mémoire partagée : %s\n", (char *)shm_ptr);
+
+  // Modification du contenu de la mémoire partagée
+  strcpy((char *)shm_ptr, "Hello world UwU");
+
+  // Affichage du contenu modifié de la mémoire partagée
+  printf("Contenu modifié de la mémoire partagée : %s\n", (char *)shm_ptr);
+
+  // Libération de la mémoire partagée
+  if (munmap(shm_ptr, shm_size) == -1) {
+      perror("Erreur lors de la libération de la mémoire partagée");
+      exit(EXIT_FAILURE);
+  }
+
+  return 0;
 }
 
   
