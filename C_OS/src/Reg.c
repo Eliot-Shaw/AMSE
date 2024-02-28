@@ -25,7 +25,12 @@
 /*....................*/
 /* variables globales */
 /*....................*/
-int GoOn = 1; /* ->controle d'execution               */
+double *shm_ptr_consigne; // Pointeur vers la mémoire partagée
+double *shm_ptr_debit;    // Pointeur vers la mémoire partagée
+double *shm_ptr_niveau;   // Pointeur vers la mémoire partagée
+double coefK;             /* ->coefK a ecrire dans la zone  */
+double Te;                /* ->coefK a ecrire dans la zone  */
+int GoOn = 1;             /* ->controle d'execution               */
 /*...................*/
 /* prototypes locaux */
 /*...................*/
@@ -82,22 +87,10 @@ int main(int argc, char *argv[])
     const char *shm_niveau = NIVEAU;     // Nom de l'objet de mémoire partagée
     const int shm_size = sizeof(double); // Taille de l'objet de mémoire partagée en octets
 
-    int shm_fd_consigne;    // Descripteur de fichier pour la mémoire partagée
-    int shm_fd_debit;       // Descripteur de fichier pour la mémoire partagée
-    int shm_fd_niveau;      // Descripteur de fichier pour la mémoire partagée
-    void *shm_ptr_consigne; // Pointeur vers la mémoire partagée
-    void *shm_ptr_debit;    // Pointeur vers la mémoire partagée
-    void *shm_ptr_niveau;   // Pointeur vers la mémoire partagée
+    int shm_fd_consigne; // Descripteur de fichier pour la mémoire partagée
+    int shm_fd_debit;    // Descripteur de fichier pour la mémoire partagée
+    int shm_fd_niveau;   // Descripteur de fichier pour la mémoire partagée
 
-    int shm_fd_consigne;      // Descripteur de fichier pour la mémoire partagée
-    int shm_fd_debit;         // Descripteur de fichier pour la mémoire partagée
-    int shm_fd_niveau;        // Descripteur de fichier pour la mémoire partagée
-    double *shm_ptr_consigne; // Pointeur vers la mémoire partagée
-    double *shm_ptr_debit;    // Pointeur vers la mémoire partagée
-    double *shm_ptr_niveau;   // Pointeur vers la mémoire partagée
-
-    double coefK;            /* ->coefK a ecrire dans la zone  */
-    double Te;               /* ->coefK a ecrire dans la zone  */
     struct sigaction sa,     /* ->configuration de la gestion de l'alarme */
         sa_old;              /* ->ancienne config de gestion d'alarme     */
     sigset_t blocked;        /* ->liste des signaux bloques               */
