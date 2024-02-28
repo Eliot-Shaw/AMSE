@@ -29,7 +29,7 @@
 double *shm_ptr_consigne; // Pointeur vers la mémoire partagée
 double *shm_ptr_debit;    // Pointeur vers la mémoire partagée
 double *shm_ptr_niveau;   // Pointeur vers la mémoire partagée
-double *shm_ptr_stopcuve;   // Pointeur vers la mémoire partagée
+int *shm_ptr_stopcuve;   // Pointeur vers la mémoire partagée
 double coefK;             /* ->coefK a ecrire dans la zone  */
 double Te;                /* ->coefK a ecrire dans la zone  */
 int GoOn = 1;             /* ->controle d'execution               */
@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
     shm_ptr_consigne = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_consigne, 0);
     shm_ptr_debit = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_debit, 0);
     shm_ptr_niveau = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_niveau, 0);
-    shm_ptr_stopcuve = (double *)mmap(NULL, sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_stopcuve, 0);
+    shm_ptr_stopcuve = (int *)mmap(NULL, sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_stopcuve, 0);
     if (shm_ptr_consigne == MAP_FAILED)
     {
         perror("Erreur lors du mappage de la mémoire partagée");
@@ -223,6 +223,7 @@ int main(int argc, char *argv[])
     close(shm_fd_debit);
     close(shm_fd_niveau);
     close(shm_fd_stopcuve);
+    printf("valeur d'arret passé à %d\n", *shm_ptr_stopcuve);
     printf("FIN.\n");
     return 0;
 }

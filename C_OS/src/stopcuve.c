@@ -47,10 +47,8 @@ int main(int argc, char *argv[])
                       MAP_SHARED,
                       fp,
                       0);
-    *val = 0;
-    printf("val: %d", *val),
-        *val = 1; /* ->ecriture effective dans la zone partagee */
-    printf("val2: %d", *val),
+    *val = 1; /* ->ecriture effective dans la zone partagee */
+    printf("valeur d'arret passé à %d\n", *val),
         close(fp);
     return (0);
 }
