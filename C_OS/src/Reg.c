@@ -22,12 +22,14 @@
 #define DEBIT "DEBIT"
 #define CONSIGNE "CONSIGNE"
 #define NIVEAU "NIVEAU"
+#define STOPCUVE "STOPCUVE"
 /*....................*/
 /* variables globales */
 /*....................*/
 double *shm_ptr_consigne; // Pointeur vers la mémoire partagée
 double *shm_ptr_debit;    // Pointeur vers la mémoire partagée
 double *shm_ptr_niveau;   // Pointeur vers la mémoire partagée
+double *shm_ptr_stopcuve;   // Pointeur vers la mémoire partagée
 double coefK;             /* ->coefK a ecrire dans la zone  */
 double Te;                /* ->coefK a ecrire dans la zone  */
 int GoOn = 1;             /* ->controle d'execution               */
@@ -82,6 +84,7 @@ void cycl_alm_handler(int signal)
 /*#####################*/
 int main(int argc, char *argv[])
 {
+    const char *shm_stopcuve = STOPCUVE; // Nom de l'objet de mémoire partagée
     const char *shm_consigne = CONSIGNE; // Nom de l'objet de mémoire partagée
     const char *shm_debit = DEBIT;       // Nom de l'objet de mémoire partagée
     const char *shm_niveau = NIVEAU;     // Nom de l'objet de mémoire partagée
@@ -90,6 +93,7 @@ int main(int argc, char *argv[])
     int shm_fd_consigne; // Descripteur de fichier pour la mémoire partagée
     int shm_fd_debit;    // Descripteur de fichier pour la mémoire partagée
     int shm_fd_niveau;   // Descripteur de fichier pour la mémoire partagée
+    int shm_fd_stopcuve;   // Descripteur de fichier pour la mémoire partagée
 
     struct sigaction sa,     /* ->configuration de la gestion de l'alarme */
         sa_old;              /* ->ancienne config de gestion d'alarme     */
@@ -135,11 +139,19 @@ int main(int argc, char *argv[])
         perror("Erreur lors de l'ouverture de l'objet de mémoire partagée");
         exit(EXIT_FAILURE);
     }
+    // Ouverture de l'objet de mémoire partagée
+    shm_fd_stopcuve = shm_open(shm_stopcuve, O_RDWR, S_IRUSR | S_IWUSR);
+    if (shm_fd_stopcuve == -1)
+    {
+        perror("Erreur lors de l'ouverture de l'objet de mémoire partagée");
+        exit(EXIT_FAILURE);
+    }
 
     // Mappage de la mémoire partagée dans l'espace d'adressage du processus
     shm_ptr_consigne = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_consigne, 0);
     shm_ptr_debit = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_debit, 0);
     shm_ptr_niveau = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_niveau, 0);
+    shm_ptr_stopcuve = (double *)mmap(NULL, sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_stopcuve, 0);
     if (shm_ptr_consigne == MAP_FAILED)
     {
         perror("Erreur lors du mappage de la mémoire partagée");
@@ -151,6 +163,11 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
     if (shm_ptr_niveau == MAP_FAILED)
+    {
+        perror("Erreur lors du mappage de la mémoire partagée");
+        exit(EXIT_FAILURE);
+    }
+    if (shm_ptr_stopcuve == MAP_FAILED)
     {
         perror("Erreur lors du mappage de la mémoire partagée");
         exit(EXIT_FAILURE);
@@ -171,6 +188,8 @@ int main(int argc, char *argv[])
     period.it_value.tv_usec = (int)((Te - (int)(Te)) * 1e6);
     /* demarrage de l'alarme */
     setitimer(ITIMER_REAL, &period, NULL);
+
+    *shm_ptr_stopcuve = 0;
     /* on ne fait desormais plus rien d'autre que */
     /* d'attendre les signaux                     */
     printf("SIMULATION :\n");
@@ -178,7 +197,7 @@ int main(int argc, char *argv[])
     {
         pause();
         printf("consigne = %lf\t niveau = %lf débit = %lf\n", *shm_ptr_consigne, *shm_ptr_niveau, *shm_ptr_debit);
-    } while (GoOn == 1);
+    } while (GoOn == 1 && *shm_ptr_stopcuve != 1);
 
     // Libération de la mémoire partagée consigne
     if (munmap(shm_ptr_consigne, shm_size) == -1)
@@ -203,6 +222,7 @@ int main(int argc, char *argv[])
     close(shm_fd_consigne);
     close(shm_fd_debit);
     close(shm_fd_niveau);
+    close(shm_fd_stopcuve);
     printf("FIN.\n");
     return 0;
 }
