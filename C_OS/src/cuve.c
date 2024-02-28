@@ -22,6 +22,7 @@
 #define     DEBIT       "DEBIT"
 #define     VOLUME      "VOLUME"
 #define     NIVEAU      "NIVEAU"
+#define     STOPCUVE      "STOPCUVE"
 /*....................*/
 /* variables globales */
 /*....................*/
@@ -30,6 +31,7 @@ double  s,                        /* ->surface de la cuve                 */
         *y,                       /* ->hauteur de fluide dans la cuve     */
         Te;                       /* ->periode d'echantillonnage          */
 double  *qe;                      /* ->qe : pointeur sur la zone partagee */
+int  *stopcuve;                      /* ->qe : pointeur sur la zone partagee */
 int     GoOn = 1;                 /* ->controle d'execution               */
 /*...................*/
 /* prototypes locaux */
@@ -89,6 +91,7 @@ int main( int argc, char *argv[])
   int                   fd_qe;      /* ->zone partagee DEBIT  */
   int                   fd_volume;  /* ->zone partagee VOLUME */
   int                   fd_niveau;  /* ->zone partagee NIVEAU */
+  int                   fd_stopcuve;  /* ->zone partagee STOPCUVE */
   /* verification des arguments */
   if( argc != 3 )
   {
@@ -125,6 +128,24 @@ int main( int argc, char *argv[])
                       PROT_READ | PROT_WRITE, 
                       MAP_SHARED, 
                       fd_qe, 
+                      0                         );
+  /*           --->STOPCUVE<-----    */
+  printf("zone STOPCUVE\n");
+  fd_stopcuve = shm_open(STOPCUVE, O_RDWR | O_CREAT, 0600);
+  if( fd_stopcuve < 0)
+  {
+    fprintf(stderr,"ERREUR : main() ---> appel a shm_open() STOPCUVE\n");
+    fprintf(stderr,"        code d'erreur %d (%s)\n", 
+                            errno, 
+                            (char *)(strerror(errno)));
+    return( -errno );
+  };
+  ftruncate( fd_qe, sizeof(double));
+  stopcuve =  (int *)mmap(NULL, 
+                      sizeof(double), 
+                      PROT_READ | PROT_WRITE, 
+                      MAP_SHARED, 
+                      fd_stopcuve, 
                       0                         );
   /*         --->VOLUME<---            */
   printf("zone VOLUME\n");
@@ -176,6 +197,9 @@ int main( int argc, char *argv[])
   period.it_value.tv_usec    = (int)((Te - (int)(Te))*1e6);
   /* demarrage de l'alarme */
   setitimer( ITIMER_REAL, &period, NULL );
+
+  *stopcuve = 0;
+
   /* on ne fait desormais plus rien d'autre que */
   /* d'attendre les signaux                     */
   printf("SIMULATION :\n");
@@ -184,11 +208,12 @@ int main( int argc, char *argv[])
     pause();
     printf("qe = %lf\t v = %lf y = %lf\n", *qe, *v, *y);
   }
-  while( GoOn == 1 );
+  while( GoOn == 1 && *stopcuve != 1);
   /* menage */
   close(fd_qe);
   close(fd_niveau);
   close(fd_volume);
+  close(fd_stopcuve);
   /* fini */
   printf("FIN.\n");
   return( 0 );  /* ->on n'arrive pas jusque la en pratique */
