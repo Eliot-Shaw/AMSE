@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     /* initialisation */
     /*................*/
     /* creation de la zone partagee */
-    fh = shm_open(CONSIGNE, O_RDWR, 0600);
+    fh = shm_open(CONSIGNE, O_RDWR | O_CREAT, 0600);
     if (fh < 0)
     {
         fprintf(stderr, "ERREUR : main() ---> appel a shm_open()\n");
