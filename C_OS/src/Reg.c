@@ -103,27 +103,28 @@ int main( int argc, char *argv[])
   shm_ptr_consigne = mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_consigne, 0);
   shm_ptr_debit = mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_debit, 0);
   shm_ptr_niveau = mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_niveau, 0);
-  if (shm_ptr == MAP_FAILED) {
+  if (shm_ptr_consigne == MAP_FAILED) {
       perror("Erreur lors du mappage de la mémoire partagée");
       exit(EXIT_FAILURE);
   }
-  if (shm_ptr == MAP_FAILED) {
+  if (shm_ptr_debit == MAP_FAILED) {
       perror("Erreur lors du mappage de la mémoire partagée");
       exit(EXIT_FAILURE);
   }
-  if (shm_ptr == MAP_FAILED) {
+  if (shm_ptr_niveau == MAP_FAILED) {
       perror("Erreur lors du mappage de la mémoire partagée");
       exit(EXIT_FAILURE);
   }
 
   // Affichage du contenu de la mémoire partagée
-  printf("Contenu de la mémoire partagée : %s\n", (char *)shm_ptr);
+  printf("Contenu de la mémoire partagée : %s\n", (double *)shm_ptr_consigne);
+  printf("Contenu de la mémoire partagée : %s\n", (double *)shm_ptr_niveau);
 
   // Modification du contenu de la mémoire partagée
-  strcpy((char *)shm_ptr, "Hello world UwU");
+  *shm_ptr_debit = 80.0; //j'ai ounblié
 
   // Affichage du contenu modifié de la mémoire partagée
-  printf("Contenu modifié de la mémoire partagée : %s\n", (char *)shm_ptr);
+  printf("Contenu modifié de la mémoire partagée : %s\n", (char *)shm_debit);
 
   // Libération de la mémoire partagée
   if (munmap(shm_ptr, shm_size) == -1) {
