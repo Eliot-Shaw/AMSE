@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     void *shm_ptr_consigne; // Pointeur vers la mémoire partagée
     void *shm_ptr_debit;    // Pointeur vers la mémoire partagée
     void *shm_ptr_niveau;   // Pointeur vers la mémoire partagée
-    
+
     double coefK;            /* ->coefK a ecrire dans la zone  */
     struct sigaction sa,     /* ->configuration de la gestion de l'alarme */
         sa_old;              /* ->ancienne config de gestion d'alarme     */
@@ -159,13 +159,6 @@ int main(int argc, char *argv[])
     // Affichage du contenu modifié de la mémoire partagée
     printf("Contenu modifié de la mémoire partagée : %s\n", (char *)shm_debit);
 
-    // Libération de la mémoire partagée
-    if (munmap(shm_ptr, shm_size) == -1)
-    {
-        perror("Erreur lors de la libération de la mémoire partagée");
-        exit(EXIT_FAILURE);
-    }
-
     // Gestion de l'alarme
     sigemptyset(&blocked);
     memset(&sa, 0, sizeof(sigaction)); /* ->precaution utile... */
@@ -189,6 +182,25 @@ int main(int argc, char *argv[])
         pause();
         printf("qe = %lf\t v = %lf y = %lf\n", *qe, *v, *y);
     } while (GoOn == 1);
+
+    // Libération de la mémoire partagée consigne
+    if (munmap(shm_ptr_consigne, shm_size) == -1)
+    {
+        perror("Erreur lors de la libération de la mémoire partagée");
+        exit(EXIT_FAILURE);
+    }
+    // Libération de la mémoire partagée debit
+    if (munmap(shm_ptr_debit, shm_size) == -1)
+    {
+        perror("Erreur lors de la libération de la mémoire partagée");
+        exit(EXIT_FAILURE);
+    }
+    // Libération de la mémoire partagée niveau
+    if (munmap(shm_ptr_niveau, shm_size) == -1)
+    {
+        perror("Erreur lors de la libération de la mémoire partagée");
+        exit(EXIT_FAILURE);
+    }
 
     return 0;
 }
