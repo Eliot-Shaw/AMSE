@@ -42,12 +42,15 @@ int main(int argc, char *argv[])
     };
     ftruncate(fp, sizeof(double));
     val = (int *)mmap(NULL,
-                     sizeof(double),
-                     PROT_READ | PROT_WRITE,
-                     MAP_SHARED,
-                     fp,
-                     0);
-    *val = 1; /* ->ecriture effective dans la zone partagee */
-    close(fp);
-    return (0); /* ->on n'arrive pas jusque la en pratique */
+                      sizeof(double),
+                      PROT_READ | PROT_WRITE,
+                      MAP_SHARED,
+                      fp,
+                      0);
+    *val = 0;
+    printf("val: %d", *val),
+        *val = 1; /* ->ecriture effective dans la zone partagee */
+    printf("val2: %d", *val),
+        close(fp);
+    return (0);
 }
