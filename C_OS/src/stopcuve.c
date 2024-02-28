@@ -28,10 +28,11 @@ int main(int argc, char *argv[])
     /* initialisation */
     /*................*/
     int *val;
+    int fp;
 
     /* creation de la zone partagee */
     fp = shm_open(STOPCUVE, O_RDWR | O_CREAT, 0600);
-    if (fh < 0)
+    if (fp < 0)
     {
         fprintf(stderr, "ERREUR : main() ---> appel a shm_open()\n");
         fprintf(stderr, "        code d'erreur %d (%s)\n",
@@ -39,12 +40,12 @@ int main(int argc, char *argv[])
                 (char *)(strerror(errno)));
         return (-errno);
     };
-    ftruncate(fh, sizeof(double));
-    yt = (int *)mmap(NULL,
+    ftruncate(fp, sizeof(double));
+    val = (int *)mmap(NULL,
                      sizeof(double),
                      PROT_READ | PROT_WRITE,
                      MAP_SHARED,
-                     fh,
+                     fp,
                      0);
     *val = 1; /* ->ecriture effective dans la zone partagee */
     close(fp);
