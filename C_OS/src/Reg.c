@@ -137,9 +137,9 @@ int main(int argc, char *argv[])
     }
 
     // Mappage de la mémoire partagée dans l'espace d'adressage du processus
-    shm_ptr_consigne = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_consigne, 0);
-    shm_ptr_debit = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_debit, 0);
-    shm_ptr_niveau = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_niveau, 0);
+    shm_ptr_consigne = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_consigne, 0);
+    shm_ptr_debit = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_debit, 0);
+    shm_ptr_niveau = (double *)mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd_niveau, 0);
     if (shm_ptr_consigne == MAP_FAILED)
     {
         perror("Erreur lors du mappage de la mémoire partagée");
