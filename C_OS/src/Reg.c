@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
     sigset_t blocked;        /* ->liste des signaux bloques               */
     struct itimerval period; /* ->periode de l'alarme cyclique            */
     /* verification des arguments */
-    if (argc != 2)
+    if (argc != 3)
     {
         usage(argv[0]);
         return (0);
