@@ -27,8 +27,10 @@ int main(int argc, char *argv[])
     /*................*/
     /* initialisation */
     /*................*/
+    int *val;
+
     /* creation de la zone partagee */
-    fh = shm_open(STOPCUVE, O_RDWR | O_CREAT, 0600);
+    fp = shm_open(STOPCUVE, O_RDWR | O_CREAT, 0600);
     if (fh < 0)
     {
         fprintf(stderr, "ERREUR : main() ---> appel a shm_open()\n");
@@ -44,7 +46,7 @@ int main(int argc, char *argv[])
                      MAP_SHARED,
                      fh,
                      0);
-    *yt = 1; /* ->ecriture effective dans la zone partagee */
-    close(fh);
+    *val = 1; /* ->ecriture effective dans la zone partagee */
+    close(fp);
     return (0); /* ->on n'arrive pas jusque la en pratique */
 }
