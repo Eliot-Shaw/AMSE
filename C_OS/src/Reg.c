@@ -129,30 +129,6 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    // Gestion de l'alarme
-    sigemptyset(&blocked);
-    memset(&sa, 0, sizeof(sigaction)); /* ->precaution utile... */
-    sa.sa_handler = cycl_alm_handler;
-    sa.sa_flags = 0;
-    sa.sa_mask = blocked;
-    /* installation du gestionnaire de signal */
-    sigaction(SIGALRM, &sa, NULL);
-    /* initialisation de l'alarme  */
-    period.it_interval.tv_sec = (int)(Te);
-    period.it_interval.tv_usec = (int)((Te - (int)(Te)) * 1e6);
-    period.it_value.tv_sec = (int)(Te);
-    period.it_value.tv_usec = (int)((Te - (int)(Te)) * 1e6);
-    /* demarrage de l'alarme */
-    setitimer(ITIMER_REAL, &period, NULL);
-    /* on ne fait desormais plus rien d'autre que */
-    /* d'attendre les signaux                     */
-    printf("SIMULATION :\n");
-    do
-    {
-        pause();
-        printf("qe = %lf\t v = %lf y = %lf\n", *qe, *v, *y);
-    } while (GoOn == 1);
-
     // Mappage de la mémoire partagée dans l'espace d'adressage du processus
     shm_ptr_consigne = mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_consigne, 0);
     shm_ptr_debit = mmap(NULL, shm_size, PROT_READ | PROT_WRITE, MAP_SHARED, shm_debit, 0);
@@ -189,6 +165,30 @@ int main(int argc, char *argv[])
         perror("Erreur lors de la libération de la mémoire partagée");
         exit(EXIT_FAILURE);
     }
+
+    // Gestion de l'alarme
+    sigemptyset(&blocked);
+    memset(&sa, 0, sizeof(sigaction)); /* ->precaution utile... */
+    sa.sa_handler = cycl_alm_handler;
+    sa.sa_flags = 0;
+    sa.sa_mask = blocked;
+    /* installation du gestionnaire de signal */
+    sigaction(SIGALRM, &sa, NULL);
+    /* initialisation de l'alarme  */
+    period.it_interval.tv_sec = (int)(Te);
+    period.it_interval.tv_usec = (int)((Te - (int)(Te)) * 1e6);
+    period.it_value.tv_sec = (int)(Te);
+    period.it_value.tv_usec = (int)((Te - (int)(Te)) * 1e6);
+    /* demarrage de l'alarme */
+    setitimer(ITIMER_REAL, &period, NULL);
+    /* on ne fait desormais plus rien d'autre que */
+    /* d'attendre les signaux                     */
+    printf("SIMULATION :\n");
+    do
+    {
+        pause();
+        printf("qe = %lf\t v = %lf y = %lf\n", *qe, *v, *y);
+    } while (GoOn == 1);
 
     return 0;
 }
