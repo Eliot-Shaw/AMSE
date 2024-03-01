@@ -8,3 +8,5 @@
 **/pubspec.lock
 
 /app_ideas/shop_app
+**/.nfs*
+**/bin
