@@ -646,7 +646,7 @@ class SelectImagePage extends StatelessWidget {
     "assets/images/champignon.jpg",
     "assets/images/color_wheel.jpg",
     "assets/images/cow.jpg",
-    "assets/images/duck_danse.gif",
+    "assets/images/duck_dance.gif",
     "assets/images/eve.jpg",
     "assets/images/gina.jpg",
     "assets/images/hotel.png",
