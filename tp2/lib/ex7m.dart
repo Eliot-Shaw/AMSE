@@ -639,19 +639,25 @@ class _FileScreenState extends State<FileScreen> {
 
 class SelectImagePage extends StatelessWidget {
   final List<String> imageList = [
+    "assets/images/agneau.jpg",
     "assets/images/avion.jpg",
+    "assets/images/banana.jpg",
+    "assets/images/camera.png",
+    "assets/images/champignon.jpg",
+    "assets/images/color_wheel.jpg",
+    "assets/images/cow.jpg",
+    "assets/images/duck_danse.gif",
     "assets/images/eve.jpg",
     "assets/images/gina.jpg",
     "assets/images/hotel.png",
     "assets/images/montagnes.jpg",
     "assets/images/nature.jpg",
+    "assets/images/purple_Rose.jpg",
+    "assets/images/rainbow.jpg",
+    "assets/images/tableau.jpg",
+    "assets/images/voiture.jpg",
     "assets/images/wallebra.png",
     "assets/images/wallespace.jpg",
-    "assets/images/rainbow.jpg",
-    "assets/images/camera.png",
-    "assets/images/voiture.jpg",
-    "assets/images/banana.jpg",
-    "assets/images/cow.jpg",
   ];
 
   final Function(String) updateImageUrl;
